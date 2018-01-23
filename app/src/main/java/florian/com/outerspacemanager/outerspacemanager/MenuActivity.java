@@ -7,7 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.lang.Math.round;
 import static java.lang.String.format;
 
 public class MenuActivity extends AppCompatActivity {
@@ -27,6 +30,8 @@ public class MenuActivity extends AppCompatActivity {
     private TextView TextViewScore;
     private TextView TextViewMetal;
     private TextView TextViewDeut;
+
+    private ImageView ImageViewBackgroundResearch;
 
     private CardView CardViewShip;
 
@@ -43,10 +48,42 @@ public class MenuActivity extends AppCompatActivity {
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);
 
+        ImageViewBackgroundResearch = findViewById(R.id.imageViewBackgroundResearchID);
+
+        // CLICK BUTTON RECHERCHE
+        //
+
+        ImageViewBackgroundResearch.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }
+        );
+
+        ImageViewBackgroundResearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
+        //View TextViewRecherche = findViewById(R.id.textViewResearchTextID);
+
         CardViewShip = findViewById(R.id.CardViewShipID);
 
         // CLICK BUTTON FLOTTE
         //
+
+       // TextViewRecherche.setVisibility(View.GONE);
 
         CardViewShip.setOnClickListener(
                 new View.OnClickListener() {
@@ -79,9 +116,11 @@ public class MenuActivity extends AppCompatActivity {
                         // TODO : set user In DB
                         //
                         TextViewPseudonyme.setText(user.getUsername());
-                        TextViewDeut.setText(format("%,f", user.getGas()));
-                        TextViewMetal.setText(format("%,f", user.getMinerals()));
+                        TextViewDeut.setText(format("%,d", round(user.getGas())));
+                        TextViewMetal.setText(format("%,d", round(user.getMinerals())));
                         TextViewScore.setText("Score : " + user.getPoints());
+
+
                     }
                 }
 
