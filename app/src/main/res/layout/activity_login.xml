@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="florian.com.outerspacemanager.outerspacemanager.LoginActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewTitleID"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="OGame"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="76sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextEmailID"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:ems="10"
+            android:hint="Adresse mail"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editTextPseudonymeID"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Pseudonyme"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextPasswordID"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Mot de passe"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="false" />
+
+        <Button
+            android:id="@+id/buttonConnectID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="25dp"
+            android:text="Se connecter"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/buttonRegisterID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="S'inscrire" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
