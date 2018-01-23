@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="florian.com.outerspacemanager.outerspacemanager.MenuActivity">
+
+    <ImageView
+        android:id="@+id/imageViewBackgroundID"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        app:srcCompat="@drawable/background_resized"
+        android:layout_width="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewMetalID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:elevation="8dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/metal_icon_mini" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/textViewMetalTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Métal"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewMetalID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="999 999 999"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewDeutID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:elevation="8dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/deut_icon_mini" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/textViewDeutTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Deuterium"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDeutID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="999 999 999"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            app:srcCompat="@drawable/planet" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CardViewBuildingID"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/imageViewBackgroundBuildingID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button_menu" />
+
+                <TextView
+                    android:id="@+id/textViewBuildingTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Bâtiments"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CardViewShipID"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/imageViewBackgroundShipID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button_menu" />
+
+                <TextView
+                    android:id="@+id/textViewShipTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Chantier Spatial"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewBackgroundResearchID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button" />
+
+                <TextView
+                    android:id="@+id/textViewResearchTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Recherche"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold"
+                    android:clickable="false"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CardViewSpaceShipID"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/imageViewBackgroundSpaceShipID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button_menu" />
+
+                <TextView
+                    android:id="@+id/textViewSpaceShipTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Chantier Spatial"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CardViewGalaxyID"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/imageViewBackgroundGalaxyID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button_menu" />
+
+                <TextView
+                    android:id="@+id/textViewGalaxyTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Galaxie"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPseudonymeID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="textViewPseudonymeID"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textViewTiretID"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textViewScoreID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="textViewScoreID2"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

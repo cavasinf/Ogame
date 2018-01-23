@@ -32,7 +32,8 @@
             android:layout_marginTop="35dp"
             android:ems="10"
             android:hint="Adresse mail"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="florian.cavasin@laposte.net" />
 
         <EditText
             android:id="@+id/editTextPseudonymeID"
@@ -42,7 +43,8 @@
             android:layout_marginTop="15dp"
             android:ems="10"
             android:hint="Pseudonyme"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="cavasinf" />
 
         <EditText
             android:id="@+id/editTextPasswordID"
@@ -53,7 +55,8 @@
             android:ems="10"
             android:hint="Mot de passe"
             android:inputType="textPassword"
-            android:selectAllOnFocus="false" />
+            android:selectAllOnFocus="false"
+            android:text="1234" />
 
         <Button
             android:id="@+id/buttonConnectID"

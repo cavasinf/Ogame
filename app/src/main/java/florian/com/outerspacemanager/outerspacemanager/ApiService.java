@@ -10,4 +10,12 @@ import retrofit2.http.*;
 public interface ApiService {
     @POST("auth/create")
     Call<CreateUserResponse> createUser(@Body User user);
+
+    @POST("auth/login")
+    Call<LoginUserResponse> loginUser(@Body User user);
+
+    @GET("users/get")
+    Call<GetUserResponse> getUser(@Header("x-access-token") String token);
+
+
 }
