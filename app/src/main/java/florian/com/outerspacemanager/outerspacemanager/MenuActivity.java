@@ -31,7 +31,13 @@ public class MenuActivity extends AppCompatActivity {
     private TextView TextViewMetal;
     private TextView TextViewDeut;
 
+    private ImageView ImageViewBackgroundBuilding;
+    private ImageView ImageViewBackgroundShip;
     private ImageView ImageViewBackgroundResearch;
+    private ImageView ImageViewBackgroundSpaceShip;
+    private ImageView ImageViewBackgroundGalaxy;
+
+    User user;
 
     private CardView CardViewShip;
 
@@ -40,69 +46,30 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Intent intent = getIntent();
-        final User oldUser = (User) intent.getSerializableExtra(Constant.EXTRA_USER);
+
 
         TextViewPseudonyme = findViewById(R.id.textViewPseudonymeID);
         TextViewScore = findViewById(R.id.textViewScoreID);
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);
 
+        ImageViewBackgroundBuilding= findViewById(R.id.imageViewBackgroundBuildingID);
+        ImageViewBackgroundShip= findViewById(R.id.imageViewBackgroundShipID);
         ImageViewBackgroundResearch = findViewById(R.id.imageViewBackgroundResearchID);
+        ImageViewBackgroundSpaceShip= findViewById(R.id.imageViewBackgroundSpaceShipID);
+        ImageViewBackgroundGalaxy= findViewById(R.id.imageViewBackgroundGalaxyID);
 
-        // CLICK BUTTON RECHERCHE
+        // GET USER FILLED
         //
 
-        ImageViewBackgroundResearch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }
-        );
-
-        ImageViewBackgroundResearch.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    // Pressed
-                    view.setSelected(true);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // Released
-                    view.setSelected(false);
-                }
-                return true;
-            }
-        });
-
-        //View TextViewRecherche = findViewById(R.id.textViewResearchTextID);
-
-        CardViewShip = findViewById(R.id.CardViewShipID);
-
-        // CLICK BUTTON FLOTTE
-        //
-
-       // TextViewRecherche.setVisibility(View.GONE);
-
-        CardViewShip.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MenuActivity.this, ShipActivity.class);
-                        startActivity(intent);
-                    }
-                }
-        );
+        Intent intent = getIntent();
+        final User oldUser = (User) intent.getSerializableExtra(Constant.EXTRA_USER);
 
         SharedPreferences settings = getSharedPreferences(Constant.PREFS_USER, 0);
         final String userToken = settings.getString("userToken", "");
         if (userToken != "") {
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            Retrofit retrofit = Constant.retrofit;
 
             ApiService service = retrofit.create(ApiService.class);
 
@@ -112,7 +79,7 @@ public class MenuActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
                     if (response.code() > 199 && response.code() < 301) {
-                        User user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
+                        user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
                         // TODO : set user In DB
                         //
                         TextViewPseudonyme.setText(user.getUsername());
@@ -132,6 +99,151 @@ public class MenuActivity extends AppCompatActivity {
             });
 
         }
+
+        // CLICK BUTTON BATIMENT
+        //
+
+        ImageViewBackgroundBuilding.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }
+        );
+
+        ImageViewBackgroundBuilding.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, BuildingActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
+        // CLICK BUTTON FLOTTE
+        //
+
+        ImageViewBackgroundShip.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }
+        );
+
+        ImageViewBackgroundShip.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, ShipActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
+        // CLICK BUTTON RECHERCHE
+        //
+
+        ImageViewBackgroundResearch.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }
+        );
+
+        ImageViewBackgroundResearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, ResearchActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
+        // CLICK BUTTON CHANTIER SPATIAL
+        //
+
+        ImageViewBackgroundSpaceShip.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                }
+        );
+
+        ImageViewBackgroundSpaceShip.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, SpaceShipActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
+        // CLICK BUTTON GALAXIE
+        //
+
+        ImageViewBackgroundGalaxy.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }
+        );
+
+        ImageViewBackgroundGalaxy.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, GalaxyActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override

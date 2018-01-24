@@ -53,10 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         final User user = new User(editTextPseudonyme.getText().toString(), editTextPassword.getText().toString());
 
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
+                        Retrofit retrofit = Constant.retrofit;
 
                         ApiService service = retrofit.create(ApiService.class);
 
@@ -101,10 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (editTextEmail.getText().toString() != "" &&  editTextPseudonyme.getText().toString() != "" && editTextPassword.getText().toString() != "") {
                         User user = new User(editTextEmail.getText().toString(), editTextPseudonyme.getText().toString(), editTextPassword.getText().toString());
 
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
+                        Retrofit retrofit = Constant.retrofit;
 
                         ApiService service = retrofit.create(ApiService.class);
 

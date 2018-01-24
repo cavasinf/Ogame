@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/imageViewBackgroundID"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="center"
-        app:srcCompat="@drawable/background_resized"
-        android:layout_width="wrap_content" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/background_resized" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/Header"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
@@ -117,7 +118,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/imageViewPlanetID"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginBottom="15dp"
@@ -130,29 +131,23 @@
             android:layout_margin="3dp"
             android:gravity="center_horizontal">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardViewBuildingID"
-                android:layout_width="260dp"
+            <ImageView
+                android:id="@+id/imageViewBackgroundBuildingID"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardBackgroundColor="@android:color/transparent">
+                app:srcCompat="@drawable/button" />
 
-                <ImageView
-                    android:id="@+id/imageViewBackgroundBuildingID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/button_menu" />
+            <TextView
+                android:id="@+id/textViewBuildingTextID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Bâtiments"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewBuildingTextID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Bâtiments"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
-            </android.support.v7.widget.CardView>
         </RelativeLayout>
 
         <RelativeLayout
@@ -161,29 +156,23 @@
             android:layout_margin="3dp"
             android:gravity="center_horizontal">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardViewShipID"
-                android:layout_width="260dp"
+            <ImageView
+                android:id="@+id/imageViewBackgroundShipID"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardBackgroundColor="@android:color/transparent">
+                app:srcCompat="@drawable/button" />
 
-                <ImageView
-                    android:id="@+id/imageViewBackgroundShipID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/button_menu" />
+            <TextView
+                android:id="@+id/textViewShipTextID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Flotte"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewShipTextID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Chantier Spatial"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
-            </android.support.v7.widget.CardView>
         </RelativeLayout>
 
         <RelativeLayout
@@ -192,13 +181,24 @@
             android:layout_margin="3dp"
             android:gravity="center_horizontal">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/imageViewBackgroundResearchID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/button" />
 
-                <!--<TextView-->
+            <TextView
+                android:id="@+id/textViewResearchTextID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Recherche"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+            <!--<TextView-->
                     <!--android:id="@+id/textViewResearchTextID"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="match_parent"-->
@@ -217,29 +217,23 @@
             android:layout_margin="3dp"
             android:gravity="center_horizontal">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardViewSpaceShipID"
-                android:layout_width="260dp"
+            <ImageView
+                android:id="@+id/imageViewBackgroundSpaceShipID"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardBackgroundColor="@android:color/transparent">
+                app:srcCompat="@drawable/button" />
 
-                <ImageView
-                    android:id="@+id/imageViewBackgroundSpaceShipID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/button_menu" />
+            <TextView
+                android:id="@+id/textViewSpaceShipTextID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Chantier Spatial"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewSpaceShipTextID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Chantier Spatial"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
-            </android.support.v7.widget.CardView>
         </RelativeLayout>
 
 
@@ -259,7 +253,7 @@
                     android:id="@+id/imageViewBackgroundGalaxyID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/button_menu" />
+                    app:srcCompat="@drawable/button" />
 
                 <TextView
                     android:id="@+id/textViewGalaxyTextID"

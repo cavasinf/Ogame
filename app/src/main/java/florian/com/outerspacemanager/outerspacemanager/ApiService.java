@@ -8,6 +8,10 @@ import retrofit2.http.*;
  */
 
 public interface ApiService {
+
+    // AUTH
+    //
+
     @POST("auth/create")
     Call<CreateUserResponse> createUser(@Body User user);
 
@@ -17,5 +21,12 @@ public interface ApiService {
     @GET("users/get")
     Call<GetUserResponse> getUser(@Header("x-access-token") String token);
 
+    // BATIMENT
+    //
 
+    @GET("buildings")
+    Call<GetBuildingsResponse> getBuildings(@Header("x-access-token") String token);
+
+    @GET("buildings/list")
+    Call<GetUserResponse> getUserBuildings(@Header("x-access-token") String token);
 }
