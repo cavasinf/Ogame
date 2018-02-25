@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="Mine_automatisee">@drawable/batiment_usine_metal</drawable>
+    <drawable name="Spatioport">@drawable/batiment_dock_spatial</drawable>
+    <drawable name="Usine_de_nanites">@drawable/batiment_nanite</drawable>
+</resources>

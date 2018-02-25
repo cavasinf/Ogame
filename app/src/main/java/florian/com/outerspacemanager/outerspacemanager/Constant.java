@@ -24,7 +24,7 @@ public class Constant {
             .build();
 
 
-    public static void ToastErrorConnection(Context ApplicationContext) {
+        public static void ToastErrorConnection(Context ApplicationContext) {
         Toast toast = Toast.makeText(ApplicationContext, "Erreur lors de la connexion ! \n Verifier votre connexion internet", Toast.LENGTH_LONG);
         toast.show();
     }
@@ -33,5 +33,29 @@ public class Constant {
         return format("%,d", NumberToFormat);
     }
 
+    public static int dspToPixel(Context applicationContext ,int dspToFormat) {
+        final float scale = applicationContext.getResources().getDisplayMetrics().density;
+        int pixels = (int) (dspToFormat * scale + 0.5f);
+        return pixels;
+    }
 
+    public static int costMineralBuilding (Building building){
+        double cost;
+            if (building.getLevel() == 0)
+                cost = building.getMineralCostLevel0();
+            else {
+                cost = building.getMineralCostLevel0() + building.getMineralCostByLevel()*building.getLevel();
+            }
+        return (int) Math.round(cost);
+    }
+
+    public static int costGasBuilding (Building building){
+        double cost;
+        if (building.getLevel() == 0)
+            cost = building.getGasCostLevel0();
+        else {
+            cost = building.getGasCostLevel0() + building.getGasCostByLevel()*building.getLevel();
+        }
+        return (int) Math.round(cost);
+    }
 }

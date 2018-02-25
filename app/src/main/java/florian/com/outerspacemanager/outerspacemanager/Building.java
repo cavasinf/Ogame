@@ -19,6 +19,7 @@ public class Building {
     timeToBuildByLevel
     timeToBuildLevel0*/
 
+    private Integer level;
     private Integer amountOfEffectByLevel;
     private Integer amountOfEffectLevel0;
     private Integer buildingId;
@@ -32,7 +33,8 @@ public class Building {
     private Integer timeToBuildByLevel;
     private Integer timeToBuildLevel0;
 
-    public Building(Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
+    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
+        this.level = level;
         this.amountOfEffectByLevel = amountOfEffectByLevel;
         this.amountOfEffectLevel0 = amountOfEffectLevel0;
         this.buildingId = buildingId;
@@ -45,6 +47,12 @@ public class Building {
         this.name = name;
         this.timeToBuildByLevel = timeToBuildByLevel;
         this.timeToBuildLevel0 = timeToBuildLevel0;
+    }
+
+    public Integer getLevel() {
+        if (level == null)
+            return 0;
+        return level;
     }
 
     public Integer getAmountOfEffectByLevel() {

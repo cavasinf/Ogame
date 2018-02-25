@@ -24,7 +24,7 @@
         <activity android:name=".BuildingActivity" />
         <activity android:name=".ResearchActivity" />
         <activity android:name=".SpaceShipActivity" />
-        <activity android:name=".GalaxyActivity"></activity>
+        <activity android:name=".GalaxyActivity"/>
     </application>
 
 </manifest>
