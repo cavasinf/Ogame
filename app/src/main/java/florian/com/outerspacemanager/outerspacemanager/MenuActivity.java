@@ -1,5 +1,6 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private CardView CardViewShip;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // CLICK BUTTON FLOTTE
+        // CLICK BUTTON  CHANTIER SPATIAL
         //
 
         ImageViewBackgroundShip.setOnClickListener(
@@ -176,7 +178,7 @@ public class MenuActivity extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Pressed
                     view.setSelected(true);
-                    Intent intent = new Intent(MenuActivity.this, ResearchActivity.class);
+                    Intent intent = new Intent(MenuActivity.this, SearchActivity.class);
                     intent.putExtra(Constant.EXTRA_USER, user);
                     startActivity(intent);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -187,7 +189,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // CLICK BUTTON CHANTIER SPATIAL
+        // CLICK BUTTON FLOTTE
         //
 
         ImageViewBackgroundSpaceShip.setOnClickListener(

@@ -58,4 +58,25 @@ public class Constant {
         }
         return (int) Math.round(cost);
     }
+
+    public static int costMineralSearch (Search search){
+        double cost;
+        if (search.getLevel() == 0)
+            cost = search.getMineralCostLevel0();
+        else {
+            cost = search.getMineralCostLevel0() + search.getMineralCostByLevel()*search.getLevel();
+        }
+        return (int) Math.round(cost);
+    }
+
+    public static int costGasSearch (Search search){
+        double cost;
+        if (search.getLevel() == 0)
+            cost = search.getGasCostLevel0();
+        else {
+            cost = search.getGasCostLevel0() + search.getGasCostByLevel()*search.getLevel();
+        }
+        return (int) Math.round(cost);
+    }
+
 }

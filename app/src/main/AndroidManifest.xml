@@ -22,9 +22,9 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".ShipActivity" />
         <activity android:name=".BuildingActivity" />
-        <activity android:name=".ResearchActivity" />
         <activity android:name=".SpaceShipActivity" />
         <activity android:name=".GalaxyActivity"/>
+        <activity android:name=".SearchActivity"/>
     </application>
 
 </manifest>

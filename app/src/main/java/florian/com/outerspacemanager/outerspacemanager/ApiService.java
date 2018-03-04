@@ -21,7 +21,7 @@ public interface ApiService {
     @GET("users/get")
     Call<GetUserResponse> getUser(@Header("x-access-token") String token);
 
-    // BATIMENT
+    // BUILDING
     //
 
     @GET("buildings")
@@ -29,4 +29,20 @@ public interface ApiService {
 
     @GET("buildings/list")
     Call<GetUserResponse> getUserBuildings(@Header("x-access-token") String token);
+
+    // SHIP
+    //
+
+    @GET("ships")
+    Call<GetShipsResponse> getShips(@Header("x-access-token") String token);
+
+    // SEARCH
+    //
+    @GET("searches/list")
+    Call<GetSearchesResponse> getSearches(@Header("x-access-token") String token);
+
+    // GALAXY
+    //
+    @GET("users/0/20")
+    Call<GetGalaxyResponse> getGalaxy(@Header("x-access-token") String token);
 }

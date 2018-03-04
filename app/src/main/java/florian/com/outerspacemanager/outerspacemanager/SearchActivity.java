@@ -17,10 +17,10 @@ import retrofit2.Retrofit;
 import static java.lang.Math.round;
 import static java.lang.String.format;
 
-public class GalaxyActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     private User user;
-    private List<GalaxyUser> GalaxyUserListReceive;
+    private List<Search> SearchListReceive;
 
     private TextView TextViewMetal;
     private TextView TextViewDeut;
@@ -29,7 +29,7 @@ public class GalaxyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building);
+        setContentView(R.layout.activity_search);
 
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);
@@ -72,26 +72,27 @@ public class GalaxyActivity extends AppCompatActivity {
 
         }
 
-        // GET GALAXY_USERS
+        // GET SEARCHES
         //
 
         Retrofit retrofit = Constant.retrofit;
 
         ApiService service = retrofit.create(ApiService.class);
 
-        Call<GetGalaxyResponse> request = service.getGalaxy(userToken);
+        Call<GetSearchesResponse> request = service.getSearches(userToken);
 
-        request.enqueue(new Callback<GetGalaxyResponse>() {
+        request.enqueue(new Callback<GetSearchesResponse>() {
             @Override
-            public void onResponse(Call<GetGalaxyResponse> call, Response<GetGalaxyResponse> response) {
+            public void onResponse(Call<GetSearchesResponse> call, Response<GetSearchesResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
-                    GalaxyUserListReceive = (List<GalaxyUser>)response.body().getUsers();
+                    SearchListReceive = (List<Search>)response.body().getSearches();
 
-                    GalaxyAdapter adapter = new GalaxyAdapter(GalaxyActivity.this, GalaxyUserListReceive, user);
+                    SearchAdapter adapter = new SearchAdapter(SearchActivity.this, SearchListReceive, user);
                     // TODO CLICK BUTTON
 //                    adapter.setOnItemClickListener(BuildingActivity.this);
 
                     listViewConstruction.setAdapter(adapter);
+
 
                     // TODO : set user In DB
                     //
@@ -99,7 +100,7 @@ public class GalaxyActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetGalaxyResponse> call, Throwable t) {
+            public void onFailure(Call<GetSearchesResponse> call, Throwable t) {
                 Constant.ToastErrorConnection(getApplicationContext());
             }
 
