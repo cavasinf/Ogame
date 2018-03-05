@@ -28,10 +28,10 @@ import static java.lang.String.format;
 
 public class BuildingAdapter extends ArrayAdapter<Building> {
 
-    private AdapterView.OnItemClickListener onItemClickListener;
+    private OnListViewChildrenClick mOnListViewChildrenClick;
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnEventListener(OnListViewChildrenClick listener) {
+        mOnListViewChildrenClick = listener;
     }
 
     private User user;
@@ -66,7 +66,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         }
 
         //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
-        Building building = getItem(position);
+        final Building building = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
         String buildingName = Normalizer.normalize(building.getName().replace(" ","_"), Normalizer.Form.NFD);
@@ -79,15 +79,21 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasBuilding(building)));
         viewHolder.textViewConstructionLevelID.setText(building.getLevel()+"");
         // TODO CLICK button
-//        viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.onClick(parent);
-//            }
-//        });
+        viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mOnListViewChildrenClick.OnClick(building.getBuildingId());
+            }
+        });
 
         return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        Building building = getItem(position);
+        return building.getBuildingId();
     }
 
     class BuildingViewHolder {

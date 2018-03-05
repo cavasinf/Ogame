@@ -9,16 +9,10 @@ import java.util.List;
 public class GetGalaxyResponse {
 
 
-    private Integer size;
     private List<GalaxyUser> users;
 
-    public GetGalaxyResponse(Integer size, List<GalaxyUser> users) {
-        this.size = size;
+    public GetGalaxyResponse( List<GalaxyUser> users) {
         this.users = users;
-    }
-
-    public Integer getSize() {
-        return size;
     }
 
     public List<GalaxyUser> getUsers() {

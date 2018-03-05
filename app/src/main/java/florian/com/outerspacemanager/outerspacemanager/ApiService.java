@@ -30,6 +30,9 @@ public interface ApiService {
     @GET("buildings/list")
     Call<GetUserResponse> getUserBuildings(@Header("x-access-token") String token);
 
+    @POST("buildings/create/{buildingId}")
+    Call<CreateBuildingsResponse> createBuildings(@Header("x-access-token") String token, @Path("buildingId") int id);
+
     // SHIP
     //
 

@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="BATIMENTS"
+                android:text="GALAXIE"
                 android:textColor="@color/colorTitleBlue"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -163,6 +163,7 @@
                 android:layout_width="15dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@color/background_light"
                 android:ems="10"
                 android:inputType="number" />
 
@@ -172,6 +173,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/action_right" />
+
+            <Button
+                android:id="@+id/buttonRechercherID"
+                android:layout_width="10dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/background_light"
+                android:text="Chercher" />
         </LinearLayout>
 
         <ListView

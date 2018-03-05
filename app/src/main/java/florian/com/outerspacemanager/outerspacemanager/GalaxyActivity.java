@@ -29,7 +29,7 @@ public class GalaxyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building);
+        setContentView(R.layout.activity_galaxy);
 
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);

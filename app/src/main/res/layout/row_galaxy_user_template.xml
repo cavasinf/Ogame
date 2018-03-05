@@ -11,14 +11,14 @@
 
     <ImageView
         android:id="@+id/imageViewPlanetID"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:srcCompat="@drawable/planet" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutCol2ID"
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="-2dp"
         android:layout_weight="1"
@@ -29,12 +29,13 @@
             android:id="@+id/textViewUsernameID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@android:color/background_light" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayoutCol3ID"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="-2dp"
         android:layout_weight="1"
@@ -45,12 +46,14 @@
             android:id="@+id/textViewScoreID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="10 000 000 000"
+            android:textAlignment="textEnd"
+            android:textColor="@android:color/background_light" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayoutCol4ID"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="-2dp"
         android:layout_weight="1"

@@ -6,7 +6,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 public class GalaxyUser {
 
-    private Integer points;
+    private long points;
     private String username;
 
     public GalaxyUser(Integer points, String username) {
@@ -14,7 +14,7 @@ public class GalaxyUser {
         this.username = username;
     }
 
-    public Integer getPoints() {
+    public Long getPoints() {
         return points;
     }
 
