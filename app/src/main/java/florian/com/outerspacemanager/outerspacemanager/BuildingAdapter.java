@@ -30,6 +30,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private OnListViewChildrenClick mOnListViewChildrenClick;
 
+    private BuildingViewHolder viewHolder;
+
     public void setOnEventListener(OnListViewChildrenClick listener) {
         mOnListViewChildrenClick = listener;
     }
@@ -50,7 +52,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template,parent, false);
         }
 
-        BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
+        viewHolder = (BuildingViewHolder) convertView.getTag();
         if(viewHolder == null){
             viewHolder = new BuildingViewHolder();
             viewHolder.imageViewConstructionID = (ImageView) convertView.findViewById(R.id.imageViewConstructionID);
@@ -78,14 +80,14 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.textViewProdNextLevelID.setText((building.getLevel()+1)+" :");
         viewHolder.textViewRessource1ID.setText(format("%,d",Constant.costMineralBuilding(building)));
         viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasBuilding(building)));
-        viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
+        viewHolder.imageViewConstructButtonBackgroundID.setActivated(building.isBuilding());
         viewHolder.textViewConstructionLevelID.setText(building.getLevel()+"");
         // TODO CLICK button
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                mOnListViewChildrenClick.OnClick(building.getBuildingId());
+                mOnListViewChildrenClick.OnClick(building.getBuildingId(),v);
             }
         });
 

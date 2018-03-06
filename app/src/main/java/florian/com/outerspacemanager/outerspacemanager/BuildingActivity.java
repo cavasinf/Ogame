@@ -44,6 +44,8 @@ public class BuildingActivity extends AppCompatActivity {
     private TextView TextViewDeut;
     private ListView listViewConstruction;
 
+    private boolean constructionLaunched = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,16 +105,43 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
-                    BuildingListReceive = (List<Building>)response.body().getBuildings();
+                    BuildingListReceive = (List<Building>) response.body().getBuildings();
 
-                    BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user);
+                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user);
+
 
                     // CLICK on item
                     adapter.setOnEventListener(new OnListViewChildrenClick() {
                         @Override
-                        public void OnClick(int id) {
-                            Constant.ToastErrorConnection(getApplicationContext());
-                            //Call<CreateBuildingsResponse> request = service.createBuildings(userToken,id);
+                        public void OnClick(int id, View v) {
+                            constructionLaunched = false;
+                            if (!v.isActivated()) {
+
+                                Call<CreateBuildingsResponse> requestCreateBuilding = service.createBuildings(userToken, id);
+
+                                requestCreateBuilding.enqueue(new Callback<CreateBuildingsResponse>() {
+                                    @Override
+                                    public void onResponse(Call<CreateBuildingsResponse> call, Response<CreateBuildingsResponse> response) {
+                                        if (response.code() > 199 && response.code() < 301) {
+                                            constructionLaunched = true;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CreateBuildingsResponse> call, Throwable t) {
+
+                                    }
+                                });
+                                if (constructionLaunched) {
+                                    adapter.notifyDataSetChanged();
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Construction lancé", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }
+                            else {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Impossible de lancer une construction sur ce batiment", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
                     });
                     listViewConstruction.setAdapter(adapter);
