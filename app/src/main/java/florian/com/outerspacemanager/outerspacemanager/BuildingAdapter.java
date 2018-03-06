@@ -61,6 +61,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             viewHolder.textViewRessource2ID = (TextView) convertView.findViewById(R.id.textViewRessource2ID);
             viewHolder.textViewConstructionLevelID = (TextView) convertView.findViewById(R.id.textViewConstructionLevelID);
             viewHolder.RelativeLayoutConstructButtonID = (RelativeLayout) convertView.findViewById(R.id.RelativeLayoutConstructButtonID);
+            viewHolder.imageViewConstructButtonBackgroundID = (ImageView) convertView.findViewById(R.id.imageViewConstructButtonBackgroundID);
 
             convertView.setTag(viewHolder);
         }
@@ -77,6 +78,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.textViewProdNextLevelID.setText((building.getLevel()+1)+" :");
         viewHolder.textViewRessource1ID.setText(format("%,d",Constant.costMineralBuilding(building)));
         viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasBuilding(building)));
+        viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
         viewHolder.textViewConstructionLevelID.setText(building.getLevel()+"");
         // TODO CLICK button
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
@@ -105,5 +107,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         public TextView textViewRessource2ID;
         public TextView textViewConstructionLevelID;
         public RelativeLayout RelativeLayoutConstructButtonID;
+        public ImageView imageViewConstructButtonBackgroundID;
     }
 }

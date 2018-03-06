@@ -32,8 +32,9 @@ public class Building {
     private String name;
     private Integer timeToBuildByLevel;
     private Integer timeToBuildLevel0;
+    private boolean building;
 
-    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
+    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0, boolean building) {
         this.level = level;
         this.amountOfEffectByLevel = amountOfEffectByLevel;
         this.amountOfEffectLevel0 = amountOfEffectLevel0;
@@ -47,6 +48,7 @@ public class Building {
         this.name = name;
         this.timeToBuildByLevel = timeToBuildByLevel;
         this.timeToBuildLevel0 = timeToBuildLevel0;
+        this.building = building;
     }
 
     public Integer getLevel() {
@@ -102,4 +104,6 @@ public class Building {
     public Integer getTimeToBuildLevel0() {
         return timeToBuildLevel0;
     }
+
+    public boolean isBuilding() { return building; }
 }
