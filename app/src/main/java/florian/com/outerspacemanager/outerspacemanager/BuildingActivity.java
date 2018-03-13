@@ -24,6 +24,8 @@ import android.widget.Toast;
 import android.app.usage.UsageEvents;
 
 import java.text.Normalizer;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,6 +45,8 @@ public class BuildingActivity extends AppCompatActivity {
     private TextView TextViewMetal;
     private TextView TextViewDeut;
     private ListView listViewConstruction;
+
+    private Date currentDate;
 
     private boolean constructionLaunched = false;
 
@@ -99,15 +103,15 @@ public class BuildingActivity extends AppCompatActivity {
 
         final ApiService service = retrofit.create(ApiService.class);
 
-        Call<GetBuildingsResponse> request = service.getBuildings(userToken);
+        Call<GetBuildingsResponse> request = service.getUserBuildings(userToken);
 
         request.enqueue(new Callback<GetBuildingsResponse>() {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     BuildingListReceive = (List<Building>) response.body().getBuildings();
-
-                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user);
+                    currentDate = Calendar.getInstance().getTime();
+                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user,currentDate);
 
 
                     // CLICK on item
@@ -115,7 +119,7 @@ public class BuildingActivity extends AppCompatActivity {
                         @Override
                         public void OnClick(int id, View v) {
                             constructionLaunched = false;
-                            if (!v.isActivated()) {
+                            if (v.isEnabled()) {
 
                                 Call<CreateBuildingsResponse> requestCreateBuilding = service.createBuildings(userToken, id);
 
@@ -123,7 +127,15 @@ public class BuildingActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<CreateBuildingsResponse> call, Response<CreateBuildingsResponse> response) {
                                         if (response.code() > 199 && response.code() < 301) {
-                                            constructionLaunched = true;
+
+                                            DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
+                                            daoBuildingStatus.open();
+                                            daoBuildingStatus.createBuildingStatus("true", Calendar.getInstance().getTime().toString());
+
+                                            adapter.notifyDataSetChanged();
+
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Construction lancé", Toast.LENGTH_LONG);
+                                            toast.show();
                                         }
                                     }
 
@@ -132,13 +144,8 @@ public class BuildingActivity extends AppCompatActivity {
 
                                     }
                                 });
-                                if (constructionLaunched) {
-                                    adapter.notifyDataSetChanged();
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Construction lancé", Toast.LENGTH_LONG);
-                                    toast.show();
-                                }
-                            }
-                            else {
+
+                            } else {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Impossible de lancer une construction sur ce batiment", Toast.LENGTH_LONG);
                                 toast.show();
                             }

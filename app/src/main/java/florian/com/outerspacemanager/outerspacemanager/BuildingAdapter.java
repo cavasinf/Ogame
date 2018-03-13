@@ -2,6 +2,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.text.Normalizer;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.Math.round;
@@ -32,15 +34,20 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private BuildingViewHolder viewHolder;
 
+    private Handler handler = new Handler();
+    private int delay = 100; //milliseconds
+
     public void setOnEventListener(OnListViewChildrenClick listener) {
         mOnListViewChildrenClick = listener;
     }
 
     private User user;
+    private Date currentDate;
 
-    public BuildingAdapter(@NonNull Context context , @NonNull List<Building> buildings,@NonNull User user) {
+    public BuildingAdapter(@NonNull Context context , @NonNull List<Building> buildings,@NonNull User user, Date currentDate) {
         super(context, R.layout.row_construction_template, buildings);
         this.user = user;
+        this.currentDate = currentDate;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -76,18 +83,36 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         buildingName = buildingName.replaceAll("[^\\p{ASCII}]", "");
         viewHolder.imageViewConstructionID.setImageResource(getContext().getResources().getIdentifier(buildingName,"drawable",getContext().getPackageName()));
         viewHolder.textView2ConstructionTitleID.setText(building.getName());
-        viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + building.getLevel() *  building.getTimeToBuildByLevel())+"s");
+
         viewHolder.textViewProdNextLevelID.setText((building.getLevel()+1)+" :");
         viewHolder.textViewRessource1ID.setText(format("%,d",Constant.costMineralBuilding(building)));
         viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasBuilding(building)));
-        viewHolder.imageViewConstructButtonBackgroundID.setActivated(building.isBuilding());
         viewHolder.textViewConstructionLevelID.setText(building.getLevel()+"");
-        // TODO CLICK button
+        viewHolder.RelativeLayoutConstructButtonID.setEnabled(!building.isBuilding());
+        viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
+
+
+        if (building.isBuilding()) {
+
+        }
+        else {
+            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + building.getLevel() *  building.getTimeToBuildByLevel())+"s");
+        }
+
+        //TODO : Convert string to date + minus + display on label
+
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 mOnListViewChildrenClick.OnClick(building.getBuildingId(),v);
+                v.setSelected(true);
+
+                handler.postDelayed(new Runnable(){
+                    public void run(){
+                        v.setSelected(false);
+                    }
+                }, delay);
             }
         });
 

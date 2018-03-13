@@ -6,23 +6,11 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 public class Building {
 
-    /*amountOfEffectByLevel
-    amountOfEffectLevel0
-    buildingId
-    effect
-    gasCostByLevel
-    gasCostLevel0
-    imageUrl
-    mineralCostByLevel
-    mineralCostLevel0
-    name
-    timeToBuildByLevel
-    timeToBuildLevel0*/
-
     private Integer level;
     private Integer amountOfEffectByLevel;
     private Integer amountOfEffectLevel0;
     private Integer buildingId;
+    private Boolean building;
     private String effect;
     private Integer gasCostByLevel;
     private Integer gasCostLevel0;
@@ -32,13 +20,13 @@ public class Building {
     private String name;
     private Integer timeToBuildByLevel;
     private Integer timeToBuildLevel0;
-    private boolean building;
 
-    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0, boolean building) {
+    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, Boolean building, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
         this.level = level;
         this.amountOfEffectByLevel = amountOfEffectByLevel;
         this.amountOfEffectLevel0 = amountOfEffectLevel0;
         this.buildingId = buildingId;
+        this.building = building;
         this.effect = effect;
         this.gasCostByLevel = gasCostByLevel;
         this.gasCostLevel0 = gasCostLevel0;
@@ -48,12 +36,9 @@ public class Building {
         this.name = name;
         this.timeToBuildByLevel = timeToBuildByLevel;
         this.timeToBuildLevel0 = timeToBuildLevel0;
-        this.building = building;
     }
 
     public Integer getLevel() {
-        if (level == null)
-            return 0;
         return level;
     }
 
@@ -67,6 +52,10 @@ public class Building {
 
     public Integer getBuildingId() {
         return buildingId;
+    }
+
+    public Boolean isBuilding() {
+        return building;
     }
 
     public String getEffect() {
@@ -104,6 +93,4 @@ public class Building {
     public Integer getTimeToBuildLevel0() {
         return timeToBuildLevel0;
     }
-
-    public boolean isBuilding() { return building; }
 }
