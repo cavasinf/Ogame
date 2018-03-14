@@ -24,6 +24,7 @@ import android.widget.Toast;
 import android.app.usage.UsageEvents;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -111,7 +112,13 @@ public class BuildingActivity extends AppCompatActivity {
                 if (response.code() > 199 && response.code() < 301) {
                     BuildingListReceive = (List<Building>) response.body().getBuildings();
                     currentDate = Calendar.getInstance().getTime();
-                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user,currentDate);
+
+                    List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
+                    DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
+                    daoBuildingStatus.open();
+                    listBuildingStatus = daoBuildingStatus.getAllBuildingStatus();
+
+                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user,currentDate,listBuildingStatus);
 
 
                     // CLICK on item

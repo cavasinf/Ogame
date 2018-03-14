@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private Handler handler = new Handler();
     private int delay = 100; //milliseconds
+    private List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
 
     public void setOnEventListener(OnListViewChildrenClick listener) {
         mOnListViewChildrenClick = listener;
@@ -44,10 +46,11 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
     private User user;
     private Date currentDate;
 
-    public BuildingAdapter(@NonNull Context context , @NonNull List<Building> buildings,@NonNull User user, Date currentDate) {
+    public BuildingAdapter(@NonNull Context context, @NonNull List<Building> buildings, @NonNull User user, Date currentDate, List<BuildingStatus> listBuildingStatus) {
         super(context, R.layout.row_construction_template, buildings);
         this.user = user;
         this.currentDate = currentDate;
+        this.listBuildingStatus = listBuildingStatus;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)

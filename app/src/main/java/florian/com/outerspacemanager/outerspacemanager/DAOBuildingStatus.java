@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -57,7 +59,20 @@ public class DAOBuildingStatus {
         return comment;
     }
 
-    private BuildingStatus getBuildingStatus(Integer id) {
+    public List<BuildingStatus> getAllBuildingStatus() {
+        List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
+        Cursor cursor = database.query(OgameDB.BUILDING_STATE_TABLE_NAME, allColumns,null ,
+                null,null, null, null);
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            BuildingStatus buildingStatus = cursorToBuildingStatus(cursor);
+            listBuildingStatus.add(buildingStatus);
+        }
+        cursor.close();
+        return listBuildingStatus;
+    }
+
+    public BuildingStatus getBuildingStatus(Integer id) {
         Cursor cursor = database.query(OgameDB.BUILDING_STATE_TABLE_NAME, allColumns,
                 OgameDB.KEY_ID + " =\"" +id.toString()+"\"",
                 null,null, null, null);
