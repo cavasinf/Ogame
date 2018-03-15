@@ -1,5 +1,9 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
+import android.text.format.Time;
+
+import java.util.Date;
+
 /**
  * Created by PC  FLORIAN on 24/01/2018.
  */
@@ -92,5 +96,18 @@ public class Building {
 
     public Integer getTimeToBuildLevel0() {
         return timeToBuildLevel0;
+    }
+
+    public Integer getTimeTobuild(boolean isItForDatabase) {
+        if (!isItForDatabase)
+            return timeToBuildLevel0 + level * timeToBuildByLevel;
+        else
+            return timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
+    }
+
+    public Integer getBuildingTimeLeft(String timeLaunched){
+        int currentTime = (int) (new Date().getTime()/1000);
+        Integer timeBetween = currentTime - Integer.parseInt(timeLaunched);
+        return getTimeTobuild(false) - timeBetween;
     }
 }

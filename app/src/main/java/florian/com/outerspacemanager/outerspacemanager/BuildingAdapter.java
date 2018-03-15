@@ -21,6 +21,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.round;
 import static java.lang.String.format;
@@ -96,10 +97,20 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
 
         if (building.isBuilding()) {
+            for (BuildingStatus buildingStatus:listBuildingStatus)
+            {
+                if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())){
+                    viewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction())+"s");
+                    break;
+                }
+                else {
+                    viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) *  building.getTimeToBuildByLevel())+"s");
+                }
+            }
 
         }
         else {
-            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + building.getLevel() *  building.getTimeToBuildByLevel())+"s");
+            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) *  building.getTimeToBuildByLevel())+"s");
         }
 
         //TODO : Convert string to date + minus + display on label

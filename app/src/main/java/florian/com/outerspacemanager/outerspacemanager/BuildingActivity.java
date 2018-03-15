@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -115,16 +118,38 @@ public class BuildingActivity extends AppCompatActivity {
 
                     List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
                     DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
+                    Environment.getExternalStorageDirectory();
                     daoBuildingStatus.open();
                     listBuildingStatus = daoBuildingStatus.getAllBuildingStatus();
 
-                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user,currentDate,listBuildingStatus);
+                    List<BuildingStatus> listOfBuildingStatusToRemove = new ArrayList<>();
+
+                    //Clear building construction in DB
+                    for (Building building : BuildingListReceive) {
+                        for (BuildingStatus buildingStatus : listBuildingStatus) {
+                            // if building in database and construction is done
+                            if (buildingStatus.getBuildingId() != null) {
+                                if (Objects.equals(building.getBuildingId().toString(), buildingStatus.getBuildingId())) {
+                                    int currentTime = (int) (new Date().getTime() / 1000);
+                                    if (currentTime - Integer.parseInt(buildingStatus.getDateConstruction()) > building.getTimeTobuild(false)) {
+                                        daoBuildingStatus.deleteBuildingState(building.getBuildingId());
+                                        listOfBuildingStatusToRemove.add(buildingStatus);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (BuildingStatus buildingStatus:listOfBuildingStatusToRemove){
+                        listBuildingStatus.remove(buildingStatus);
+                    }
+
+                    final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, BuildingListReceive, user, currentDate, listBuildingStatus);
 
 
                     // CLICK on item
                     adapter.setOnEventListener(new OnListViewChildrenClick() {
                         @Override
-                        public void OnClick(int id, View v) {
+                        public void OnClick(final int id, View v) {
                             constructionLaunched = false;
                             if (v.isEnabled()) {
 
@@ -137,11 +162,12 @@ public class BuildingActivity extends AppCompatActivity {
 
                                             DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
                                             daoBuildingStatus.open();
-                                            daoBuildingStatus.createBuildingStatus("true", Calendar.getInstance().getTime().toString());
+                                            int currentTime = (int) (new Date().getTime() / 1000);
+                                            daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
 
                                             adapter.notifyDataSetChanged();
 
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Construction lancé", Toast.LENGTH_LONG);
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Construction lancée", Toast.LENGTH_LONG);
                                             toast.show();
                                         }
                                     }

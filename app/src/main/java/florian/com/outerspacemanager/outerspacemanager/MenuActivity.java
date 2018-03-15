@@ -38,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
     private ImageView ImageViewBackgroundSpaceShip;
     private ImageView ImageViewBackgroundGalaxy;
 
-    User user;
+    public static User user;
 
     private CardView CardViewShip;
 

@@ -6,6 +6,7 @@ import java.util.UUID;
 public class BuildingStatus {
 
     private UUID id;
+    private String buildingId;
     private String building;
     private String dateConstruction;
 
@@ -15,6 +16,14 @@ public class BuildingStatus {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 
     public String getBuilding() {

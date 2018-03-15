@@ -7,8 +7,9 @@ import android.os.Environment;
 
 
 public class OgameDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "OgameDB.db";
+    //TODO : set DB name dynamic user log
 
     // ============== USER ===================
 
@@ -24,10 +25,11 @@ public class OgameDB extends SQLiteOpenHelper {
     // ============== BUILDING STATE ===================
 
     public static final String BUILDING_STATE_TABLE_NAME = "BuildingState";
+    public static final String KEY_BUILDING_ID = "building_id";
     public static final String KEY_BUILDING = "building";
     public static final String KEY_DATE_CONSTRUCTION = "dateConstruction";
 
-    private static final String BUILDING_STATE_TABLE_CREATE = "CREATE TABLE " + BUILDING_STATE_TABLE_NAME + " (" + KEY_BUILDING + " TEXT, " +
+    private static final String BUILDING_STATE_TABLE_CREATE = "CREATE TABLE " + BUILDING_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_BUILDING_ID + " TEXT, " +KEY_BUILDING + " TEXT, " +
             KEY_DATE_CONSTRUCTION + " TEXT);";
 
 
@@ -43,6 +45,7 @@ public class OgameDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     if (oldVersion < newVersion)
+        //TODO : Create back of data before erase List<ofTables>
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + BUILDING_STATE_TABLE_NAME);
         onCreate(db);

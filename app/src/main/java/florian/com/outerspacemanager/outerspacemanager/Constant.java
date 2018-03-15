@@ -39,7 +39,7 @@ public class Constant {
         return pixels;
     }
 
-    public static int costMineralBuilding (Building building){
+    public static int costMineralBuilding (Building building,Boolean... isCheckAfterConstruction){
         double cost;
             if (building.getLevel() == 0)
                 cost = building.getMineralCostLevel0();
