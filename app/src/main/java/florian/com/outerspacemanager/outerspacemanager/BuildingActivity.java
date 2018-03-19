@@ -44,6 +44,8 @@ import static java.lang.String.format;
 public class BuildingActivity extends AppCompatActivity {
 
     private User user;
+    private Retrofit retrofit = Constant.retrofit;
+    final ApiService service = retrofit.create(ApiService.class);
     private List<Building> BuildingListReceive;
 
     private TextView TextViewMetal;
@@ -51,8 +53,8 @@ public class BuildingActivity extends AppCompatActivity {
     private ListView listViewConstruction;
 
     private Date currentDate;
+    private List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
 
-    private boolean constructionLaunched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +105,6 @@ public class BuildingActivity extends AppCompatActivity {
         // GET BUILDINGS
         //
 
-        Retrofit retrofit = Constant.retrofit;
-
-        final ApiService service = retrofit.create(ApiService.class);
-
         Call<GetBuildingsResponse> request = service.getUserBuildings(userToken);
 
         request.enqueue(new Callback<GetBuildingsResponse>() {
@@ -116,7 +114,7 @@ public class BuildingActivity extends AppCompatActivity {
                     BuildingListReceive = (List<Building>) response.body().getBuildings();
                     currentDate = Calendar.getInstance().getTime();
 
-                    List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
+
                     DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
                     Environment.getExternalStorageDirectory();
                     daoBuildingStatus.open();
@@ -150,7 +148,6 @@ public class BuildingActivity extends AppCompatActivity {
                     adapter.setOnEventListener(new OnListViewChildrenClick() {
                         @Override
                         public void OnClick(final int id, View v) {
-                            constructionLaunched = false;
                             if (v.isEnabled()) {
 
                                 Call<CreateBuildingsResponse> requestCreateBuilding = service.createBuildings(userToken, id);
@@ -165,7 +162,7 @@ public class BuildingActivity extends AppCompatActivity {
                                             int currentTime = (int) (new Date().getTime() / 1000);
                                             daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
 
-                                            adapter.notifyDataSetChanged();
+                                            refreshBuildingData(userToken,adapter);
 
                                             Toast toast = Toast.makeText(getApplicationContext(), "Construction lancée", Toast.LENGTH_LONG);
                                             toast.show();
@@ -197,6 +194,29 @@ public class BuildingActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    private void refreshBuildingData(String userToken, final BuildingAdapter adapter) {
+        Call<GetBuildingsResponse> request = service.getUserBuildings(userToken);
+
+        request.enqueue(new Callback<GetBuildingsResponse>() {
+                            @Override
+                            public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
+                                if (response.code() > 199 && response.code() < 301) {
+                                    // TODO : refresh items adapter
+/*                                    BuildingListReceive = (List<Building>) response.body().getBuildings();
+                                    BuildingAdapter adapter = new BuildingAdapter(getApplicationContext(),BuildingListReceive,user,currentDate,listBuildingStatus);*/
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+
+            @Override
+            public void onFailure(Call<GetBuildingsResponse> call, Throwable t) {
+
+            }
+        });
+
 
     }
 

@@ -2,6 +2,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -39,6 +40,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
     private Handler handler = new Handler();
     private int delay = 100; //milliseconds
     private List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
+    private List<Boolean> isTimerLaunched = new ArrayList<Boolean>();
 
     public void setOnEventListener(OnListViewChildrenClick listener) {
         mOnListViewChildrenClick = listener;
@@ -59,12 +61,12 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
     @Override
     public View getView(int position, View convertView, @NonNull final ViewGroup parent) {
 
-        if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template,parent, false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template, parent, false);
         }
 
         viewHolder = (BuildingViewHolder) convertView.getTag();
-        if(viewHolder == null){
+        if (viewHolder == null) {
             viewHolder = new BuildingViewHolder();
             viewHolder.imageViewConstructionID = (ImageView) convertView.findViewById(R.id.imageViewConstructionID);
             viewHolder.textView2ConstructionTitleID = (TextView) convertView.findViewById(R.id.textView2ConstructionTitleID);
@@ -83,34 +85,40 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         final Building building = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
-        String buildingName = Normalizer.normalize(building.getName().replace(" ","_"), Normalizer.Form.NFD);
+        String buildingName = Normalizer.normalize(building.getName().replace(" ", "_"), Normalizer.Form.NFD);
         buildingName = buildingName.replaceAll("[^\\p{ASCII}]", "");
-        viewHolder.imageViewConstructionID.setImageResource(getContext().getResources().getIdentifier(buildingName,"drawable",getContext().getPackageName()));
+        viewHolder.imageViewConstructionID.setImageResource(getContext().getResources().getIdentifier(buildingName, "drawable", getContext().getPackageName()));
         viewHolder.textView2ConstructionTitleID.setText(building.getName());
 
-        viewHolder.textViewProdNextLevelID.setText((building.getLevel()+1)+" :");
-        viewHolder.textViewRessource1ID.setText(format("%,d",Constant.costMineralBuilding(building)));
-        viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasBuilding(building)));
-        viewHolder.textViewConstructionLevelID.setText(building.getLevel()+"");
+        viewHolder.textViewProdNextLevelID.setText((building.getLevel() + 1) + " :");
+        viewHolder.textViewRessource1ID.setText(format("%,d", Constant.costMineralBuilding(building)));
+        viewHolder.textViewRessource2ID.setText(format("%,d", Constant.costGasBuilding(building)));
+        viewHolder.textViewConstructionLevelID.setText(building.getLevel() + "");
         viewHolder.RelativeLayoutConstructButtonID.setEnabled(!building.isBuilding());
         viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
 
 
         if (building.isBuilding()) {
-            for (BuildingStatus buildingStatus:listBuildingStatus)
-            {
-                if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())){
-                    viewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction())+"s");
+            for (BuildingStatus buildingStatus : listBuildingStatus) {
+                if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())) {
+                    if (isTimerLaunched.size() > 0){
+                        if (isTimerLaunched.size() > building.getBuildingId()) {
+                            if (!isTimerLaunched.get(building.getBuildingId())) {
+//                                startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+//                    viewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction())+"s");
+                            }
+                        }
+                    } else {
+//                        startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+                    }
                     break;
-                }
-                else {
-                    viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) *  building.getTimeToBuildByLevel())+"s");
+                } else {
+                    viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) * building.getTimeToBuildByLevel()) + "s");
                 }
             }
 
-        }
-        else {
-            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) *  building.getTimeToBuildByLevel())+"s");
+        } else {
+            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuildLevel0() + (building.getLevel()) * building.getTimeToBuildByLevel()) + "s");
         }
 
         //TODO : Convert string to date + minus + display on label
@@ -119,11 +127,11 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
             @Override
             public void onClick(final View v) {
-                mOnListViewChildrenClick.OnClick(building.getBuildingId(),v);
+                mOnListViewChildrenClick.OnClick(building.getBuildingId(), v);
                 v.setSelected(true);
 
-                handler.postDelayed(new Runnable(){
-                    public void run(){
+                handler.postDelayed(new Runnable() {
+                    public void run() {
                         v.setSelected(false);
                     }
                 }, delay);
@@ -149,5 +157,20 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         public TextView textViewConstructionLevelID;
         public RelativeLayout RelativeLayoutConstructButtonID;
         public ImageView imageViewConstructButtonBackgroundID;
+    }
+
+    private void startTimer(long time, final Building building, final BuildingStatus buildingStatus, final BuildingViewHolder viewHolderToChange) {
+        isTimerLaunched.set(building.getBuildingId(), true);
+        CountDownTimer counter = new CountDownTimer(time * 1000, 1000) {
+            public void onTick(long millisUntilDone) {
+                isTimerLaunched.set(building.getBuildingId(), true);
+                viewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
+            }
+
+            public void onFinish() {
+                viewHolderToChange.textViewProdTimeID.setText("DONE!");
+                isTimerLaunched.set(building.getBuildingId(), false);
+            }
+        }.start();
     }
 }
