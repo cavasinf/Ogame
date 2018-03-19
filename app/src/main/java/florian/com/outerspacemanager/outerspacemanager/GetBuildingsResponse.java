@@ -1,12 +1,14 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by PC  FLORIAN on 24/01/2018.
  */
 
 public class GetBuildingsResponse {
+
 
     private Integer size;
     private List<Building> buildings;
@@ -23,4 +25,6 @@ public class GetBuildingsResponse {
     public List<Building> getBuildings() {
         return buildings;
     }
+
+
 }

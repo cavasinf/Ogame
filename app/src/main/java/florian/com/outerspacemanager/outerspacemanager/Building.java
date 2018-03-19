@@ -98,16 +98,40 @@ public class Building {
         return timeToBuildLevel0;
     }
 
-    public Integer getTimeTobuild(boolean isItForDatabase) {
+    public Integer getTimeToBuild(boolean isItForDatabase) {
+        Integer timeWithoutSpeedBuilding;
         if (!isItForDatabase)
-            return timeToBuildLevel0 + level * timeToBuildByLevel;
+            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;
         else
-            return timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
+            timeWithoutSpeedBuilding =  timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
+
+        return timeWithoutSpeedBuilding; //TODO minus speed_effect
     }
 
     public Integer getBuildingTimeLeft(String timeLaunched){
         int currentTime = (int) (new Date().getTime()/1000);
         Integer timeBetween = currentTime - Integer.parseInt(timeLaunched);
-        return getTimeTobuild(false) - timeBetween;
+        return getTimeToBuild(false) - timeBetween;
     }
+
+    public Integer getCostMineral (Building building,Boolean... isCheckAfterConstruction){
+        double cost;
+        if (building.getLevel() == 0)
+            cost = building.getMineralCostLevel0();
+        else {
+            cost = building.getMineralCostLevel0() + building.getMineralCostByLevel()*building.getLevel();
+        }
+        return (int) Math.round(cost);
+    }
+
+    public Integer getCostGas (Building building){
+        double cost;
+        if (building.getLevel() == 0)
+            cost = building.getGasCostLevel0();
+        else {
+            cost = building.getGasCostLevel0() + building.getGasCostByLevel()*building.getLevel();
+        }
+        return (int) Math.round(cost);
+    }
+
 }

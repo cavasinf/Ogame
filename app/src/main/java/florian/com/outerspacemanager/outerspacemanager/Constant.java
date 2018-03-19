@@ -16,7 +16,8 @@ public class Constant {
 
     public static final String PREFS_USER = "UserPrefs";
     public static final String EXTRA_USER = "UserExtra";
-    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
+//    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
+    public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
@@ -39,25 +40,7 @@ public class Constant {
         return pixels;
     }
 
-    public static int costMineralBuilding (Building building,Boolean... isCheckAfterConstruction){
-        double cost;
-            if (building.getLevel() == 0)
-                cost = building.getMineralCostLevel0();
-            else {
-                cost = building.getMineralCostLevel0() + building.getMineralCostByLevel()*building.getLevel();
-            }
-        return (int) Math.round(cost);
-    }
 
-    public static int costGasBuilding (Building building){
-        double cost;
-        if (building.getLevel() == 0)
-            cost = building.getGasCostLevel0();
-        else {
-            cost = building.getGasCostLevel0() + building.getGasCostByLevel()*building.getLevel();
-        }
-        return (int) Math.round(cost);
-    }
 
     public static int costMineralSearch (Search search){
         double cost;
@@ -77,6 +60,11 @@ public class Constant {
             cost = search.getGasCostLevel0() + search.getGasCostByLevel()*search.getLevel();
         }
         return (int) Math.round(cost);
+    }
+
+    public static void displayToast(Context ApplicationContext,String messageToDisplay){
+        Toast toast = Toast.makeText(ApplicationContext, messageToDisplay, Toast.LENGTH_LONG);
+        toast.show();
     }
 
 }

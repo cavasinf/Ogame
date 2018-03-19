@@ -129,15 +129,16 @@ public class BuildingActivity extends AppCompatActivity {
                             if (buildingStatus.getBuildingId() != null) {
                                 if (Objects.equals(building.getBuildingId().toString(), buildingStatus.getBuildingId())) {
                                     int currentTime = (int) (new Date().getTime() / 1000);
-                                    if (currentTime - Integer.parseInt(buildingStatus.getDateConstruction()) > building.getTimeTobuild(false)) {
-                                        daoBuildingStatus.deleteBuildingState(building.getBuildingId());
+                                    if (currentTime - Integer.parseInt(buildingStatus.getDateConstruction()) > building.getTimeToBuild(false)) {
+                                        if (!daoBuildingStatus.deleteBuildingState(building.getBuildingId()))
+                                            Constant.displayToast(getApplicationContext(), "Error when delete in database");
                                         listOfBuildingStatusToRemove.add(buildingStatus);
                                     }
                                 }
                             }
                         }
                     }
-                    for (BuildingStatus buildingStatus:listOfBuildingStatusToRemove){
+                    for (BuildingStatus buildingStatus : listOfBuildingStatusToRemove) {
                         listBuildingStatus.remove(buildingStatus);
                     }
 
@@ -162,7 +163,7 @@ public class BuildingActivity extends AppCompatActivity {
                                             int currentTime = (int) (new Date().getTime() / 1000);
                                             daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
 
-                                            refreshBuildingData(userToken,adapter);
+                                            refreshBuildingData(userToken, adapter);
 
                                             Toast toast = Toast.makeText(getApplicationContext(), "Construction lancée", Toast.LENGTH_LONG);
                                             toast.show();
@@ -201,15 +202,15 @@ public class BuildingActivity extends AppCompatActivity {
         Call<GetBuildingsResponse> request = service.getUserBuildings(userToken);
 
         request.enqueue(new Callback<GetBuildingsResponse>() {
-                            @Override
-                            public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
-                                if (response.code() > 199 && response.code() < 301) {
-                                    // TODO : refresh items adapter
+            @Override
+            public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
+                if (response.code() > 199 && response.code() < 301) {
+                    // TODO : refresh items adapter
 /*                                    BuildingListReceive = (List<Building>) response.body().getBuildings();
                                     BuildingAdapter adapter = new BuildingAdapter(getApplicationContext(),BuildingListReceive,user,currentDate,listBuildingStatus);*/
-                                    adapter.notifyDataSetChanged();
-                                }
-                            }
+                    adapter.notifyDataSetChanged();
+                }
+            }
 
             @Override
             public void onFailure(Call<GetBuildingsResponse> call, Throwable t) {
