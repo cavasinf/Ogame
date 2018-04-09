@@ -1,5 +1,6 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -38,6 +39,10 @@ public interface ApiService {
 
     @GET("ships")
     Call<GetShipsResponse> getShips(@Header("x-access-token") String token);
+
+    @POST("ships/create/{shipId}")
+    Call<CreateShipsResponse> createShips(@Header("x-access-token") String token, @Path("shipId") int id, @Body RequestBody body);
+
 
     // SEARCH
     //

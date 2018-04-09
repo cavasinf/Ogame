@@ -75,14 +75,10 @@ public class SearchAdapter extends ArrayAdapter<Search> {
         viewHolder.textViewRessource1ID.setText(format("%,d",Constant.costMineralSearch(search)));
         viewHolder.textViewRessource2ID.setText(format("%,d",Constant.costGasSearch(search)));
         viewHolder.textViewConstructionLevelID.setText(search.getLevel()+"");
+
+
+
         // TODO CLICK button
-//        viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.onClick(parent);
-//            }
-//        });
 
         return convertView;
     }

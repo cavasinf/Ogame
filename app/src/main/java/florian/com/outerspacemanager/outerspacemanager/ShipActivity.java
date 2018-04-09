@@ -4,11 +4,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +27,8 @@ import static java.lang.String.format;
 public class ShipActivity extends AppCompatActivity {
 
     private User user;
+    private Retrofit retrofit = Constant.retrofit;
+    final ApiService service = retrofit.create(ApiService.class);
     private List<Ship> ShipListReceive;
 
     private TextView TextViewMetal;
@@ -56,8 +65,7 @@ public class ShipActivity extends AppCompatActivity {
                 public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
                     if (response.code() > 199 && response.code() < 301) {
                         user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
-                        // TODO : set user In DB
-                        //
+
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));
                     }
@@ -73,11 +81,6 @@ public class ShipActivity extends AppCompatActivity {
 
         // GET SHIPS
         //
-
-        Retrofit retrofit = Constant.retrofit;
-
-        ApiService service = retrofit.create(ApiService.class);
-
         Call<GetShipsResponse> request = service.getShips(userToken);
 
         request.enqueue(new Callback<GetShipsResponse>() {
@@ -86,14 +89,56 @@ public class ShipActivity extends AppCompatActivity {
                 if (response.code() > 199 && response.code() < 301) {
                     ShipListReceive = (List<Ship>)response.body().getShips();
 
-                    ShipAdapter adapter = new ShipAdapter(ShipActivity.this, ShipListReceive, user);
-                    // TODO CLICK BUTTON
-//                    adapter.setOnItemClickListener(BuildingActivity.this);
+                    final ShipAdapter adapter = new ShipAdapter(ShipActivity.this, ShipListReceive, user);
+
+                    // CLICK on item
+                    adapter.setOnEventListener(new OnListViewShipChildrenClick() {
+                        @Override
+                        public void OnClick(final int id,String amount, View v) {
+                            if (v.isEnabled()) {
+
+                                JSONObject jsonParams = new JSONObject();
+                                try {
+                                    jsonParams.put("amount", amount);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),jsonParams.toString());
+                                Call<CreateShipsResponse> requestCreateShip = service.createShips(userToken, id, body);
+
+                                requestCreateShip.enqueue(new Callback<CreateShipsResponse>() {
+                                    @Override
+                                    public void onResponse(Call<CreateShipsResponse> call, Response<CreateShipsResponse> response) {
+                                        if (response.code() > 199 && response.code() < 301) {
+
+                                            //TODO : current time building + queue ???
+
+//                                            DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
+//                                            daoBuildingStatus.open();
+//                                            int currentTime = (int) (new Date().getTime() / 1000);
+//                                            daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
+
+                                            refreshShipData(userToken, adapter);
+
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Construction vaisseau lancée", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CreateShipsResponse> call, Throwable t) {
+
+                                    }
+                                });
+
+                            } else {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Impossible de lancer une construction sur ce vaisseau", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }
+                    });
 
                     listViewConstruction.setAdapter(adapter);
-
-                    // TODO : set user In DB
-                    //
                 }
             }
 
@@ -104,5 +149,25 @@ public class ShipActivity extends AppCompatActivity {
 
         });
 
+    }
+
+
+    private void refreshShipData(String userToken, final ShipAdapter adapter) {
+        Call<GetShipsResponse> request = service.getShips(userToken);
+
+        request.enqueue(new Callback<GetShipsResponse>() {
+            @Override
+            public void onResponse(Call<GetShipsResponse> call, Response<GetShipsResponse> response) {
+                if (response.code() > 199 && response.code() < 301) {
+                    adapter.clear();
+                    adapter.addAll(response.body().getShips());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetShipsResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

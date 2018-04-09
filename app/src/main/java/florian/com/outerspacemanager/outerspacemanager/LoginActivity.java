@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 //Sinon demander la permission
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CONTACTS},
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }
         }

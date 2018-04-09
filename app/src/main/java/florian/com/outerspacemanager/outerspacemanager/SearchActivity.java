@@ -56,8 +56,7 @@ public class SearchActivity extends AppCompatActivity {
                 public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
                     if (response.code() > 199 && response.code() < 301) {
                         user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
-                        // TODO : set user In DB
-                        //
+
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));
                     }
@@ -93,9 +92,6 @@ public class SearchActivity extends AppCompatActivity {
 
                     listViewConstruction.setAdapter(adapter);
 
-
-                    // TODO : set user In DB
-                    //
                 }
             }
 
@@ -106,30 +102,5 @@ public class SearchActivity extends AppCompatActivity {
 
         });
 
-        // GET USER BUILDING
-        //
-
-       /* Retrofit retrofit = Constant.retrofit;
-
-        ApiService service = retrofit.create(ApiService.class);
-
-        Call<GetUserResponse> request = service.getUserBuildings(user.getToken());
-
-        request.enqueue(new Callback<GetUserResponse>() {
-            @Override
-            public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
-                if (response.code() > 199 && response.code() < 301) {
-
-                    // TODO : set user In DB
-                    //
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetUserResponse> call, Throwable t) {
-                Constant.ToastErrorConnection(getApplicationContext());
-            }
-
-        });*/
     }
 }

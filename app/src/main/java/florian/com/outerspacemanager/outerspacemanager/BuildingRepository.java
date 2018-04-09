@@ -37,8 +37,8 @@ public class BuildingRepository {
                     BuildingListReceive = (List<Building>) response.body().getBuildings();
 
                     for (Building building : BuildingListReceive) {
-                        if (Objects.equals(building.getEffect(), effectToSearch))
-                            return building;
+                        /*if (Objects.equals(building.getEffect(), effectToSearch))
+                            return building;*/
                     }
                 }
 
@@ -49,7 +49,7 @@ public class BuildingRepository {
 
             }
         });
-
+return null;
     }
 
 }

@@ -82,8 +82,7 @@ public class MenuActivity extends AppCompatActivity {
                 public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
                     if (response.code() > 199 && response.code() < 301) {
                         user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
-                        // TODO : set user In DB
-                        //
+
                         TextViewPseudonyme.setText(user.getUsername());
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));

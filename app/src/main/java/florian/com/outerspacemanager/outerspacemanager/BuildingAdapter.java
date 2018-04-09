@@ -37,8 +37,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private OnListViewChildrenClick mOnListViewChildrenClick;
 
-    private BuildingViewHolder viewHolder;
-
     private Handler handler = new Handler();
     private int delay = 100; //milliseconds
     private List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
@@ -67,7 +65,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template, parent, false);
         }
 
-        viewHolder = (BuildingViewHolder) convertView.getTag();
+        BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
         if (viewHolder == null) {
             viewHolder = new BuildingViewHolder();
             viewHolder.imageViewConstructionID = (ImageView) convertView.findViewById(R.id.imageViewConstructionID);
@@ -98,16 +96,43 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.textViewConstructionLevelID.setText(building.getLevel() + "");
         viewHolder.RelativeLayoutConstructButtonID.setEnabled(!building.isBuilding());
         viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
+        final BuildingViewHolder finalViewHolder = viewHolder;
 
+        if (finalViewHolder.timer != null) {
+            finalViewHolder.timer.cancel();
+        }
         if (building.isBuilding()) {
-            for (BuildingStatus buildingStatus : listBuildingStatus) {
+            for (final BuildingStatus buildingStatus : listBuildingStatus) {
                 if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())) {
                     if (isTimerLaunched != null) {
                         if (!isTimerLaunched.containsKey(building.getBuildingId())) {
-                            startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+                            CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
+                                public void onTick(long millisUntilDone) {
+                                    isTimerLaunched.put(building.getBuildingId(), true);
+                                    finalViewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
+                                }
+
+                                public void onFinish() {
+                                    finalViewHolder.textViewProdTimeID.setText("DONE");
+                                    isTimerLaunched.put(building.getBuildingId(), false);
+                                }
+                            }.start();
+                            finalViewHolder.timer = counter;
+                            //startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
                         }
                     } else {
-                        startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+                        CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
+                            public void onTick(long millisUntilDone) {
+                                isTimerLaunched.put(building.getBuildingId(), true);
+                                finalViewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
+                            }
+
+                            public void onFinish() {
+                                finalViewHolder.textViewProdTimeID.setText("DONE");
+                                isTimerLaunched.put(building.getBuildingId(), false);
+                            }
+                        }.start();
+                        //startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
                     }
                     break;
                 }
@@ -152,6 +177,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         public TextView textViewConstructionLevelID;
         public RelativeLayout RelativeLayoutConstructButtonID;
         public ImageView imageViewConstructButtonBackgroundID;
+        public CountDownTimer timer;
     }
 
     private void startTimer(long time, final Building building, final BuildingStatus buildingStatus, final BuildingViewHolder viewHolderToChange) {

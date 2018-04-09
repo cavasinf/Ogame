@@ -86,8 +86,7 @@ public class BuildingActivity extends AppCompatActivity {
                 public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
                     if (response.code() > 199 && response.code() < 301) {
                         user = new User(oldUser, userToken, response.body().getGas(), response.body().getGasModifier(), response.body().getMinerals(), response.body().getMineralsModifier(), response.body().getPoints());
-                        // TODO : set user In DB
-                        //
+
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));
                     }
@@ -205,10 +204,8 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
-                    // TODO : refresh items adapter
-/*                                    BuildingListReceive = (List<Building>) response.body().getBuildings();
-                                    BuildingAdapter adapter = new BuildingAdapter(getApplicationContext(),BuildingListReceive,user,currentDate,listBuildingStatus);*/
-                    adapter.notifyDataSetChanged();
+                    adapter.clear();
+                    adapter.addAll(response.body().getBuildings());
                 }
             }
 
@@ -217,8 +214,6 @@ public class BuildingActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
 }

@@ -16,8 +16,8 @@ public class Constant {
 
     public static final String PREFS_USER = "UserPrefs";
     public static final String EXTRA_USER = "UserExtra";
-//    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
-    public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
+    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
+//    public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
