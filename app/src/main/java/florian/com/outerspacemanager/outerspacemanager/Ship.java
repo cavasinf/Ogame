@@ -6,6 +6,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 public class Ship {
 
+    private double amount;
     private Integer capacity;
     private Integer gasCost;
     private Integer life;
@@ -33,6 +34,8 @@ public class Ship {
         this.speed = speed;
         this.timeToBuild = timeToBuild;
     }
+
+    public double getAmount() { return amount; }
 
     public Integer getCapacity() {
         return capacity;
