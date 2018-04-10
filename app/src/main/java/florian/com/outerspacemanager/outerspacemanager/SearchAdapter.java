@@ -25,10 +25,10 @@ import static java.lang.String.format;
 
 public class SearchAdapter extends ArrayAdapter<Search> {
 
-    private AdapterView.OnItemClickListener onItemClickListener;
+    private OnListViewChildrenClick mOnListViewChildrenClick;
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnEventListener(OnListViewChildrenClick listener) {
+        mOnListViewChildrenClick = listener;
     }
 
     private User user;

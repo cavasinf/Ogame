@@ -78,73 +78,24 @@ public class SpaceShipActivity extends AppCompatActivity {
             });
         }
 
-
-        // TODO : GetSpaceShipResponse
-        // GET SHIPS
+        // GET SPACE SHIPS
         //
-        Call<GetSpaceShipResponse> request = service.getSpaceShip(userToken);
+        Call<GetSpaceShipsResponse> request = service.getSpaceShip(userToken);
 
-        request.enqueue(new Callback<GetSpaceShipResponse>() {
+        request.enqueue(new Callback<GetSpaceShipsResponse>() {
             @Override
-            public void onResponse(Call<GetSpaceShipResponse> call, Response<GetSpaceShipResponse> response) {
+            public void onResponse(Call<GetSpaceShipsResponse> call, Response<GetSpaceShipsResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     ShipListReceive = (List<Ship>)response.body().getShips();
 
-                    final ShipAdapter adapter = new ShipAdapter(SpaceShipActivity.this, ShipListReceive, user);
+                    final SpaceShipAdapter adapter = new SpaceShipAdapter(SpaceShipActivity.this, ShipListReceive, user);
 
-                    // CLICK on item
-                    adapter.setOnEventListener(new OnListViewShipChildrenClick() {
-                        @Override
-                        public void OnClick(final int id,String amount, View v) {
-                            if (v.isEnabled()) {
-
-                                JSONObject jsonParams = new JSONObject();
-                                try {
-                                    jsonParams.put("amount", amount);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),jsonParams.toString());
-                                Call<CreateShipsResponse> requestCreateShip = service.createShips(userToken, id, body);
-
-                                requestCreateShip.enqueue(new Callback<CreateShipsResponse>() {
-                                    @Override
-                                    public void onResponse(Call<CreateShipsResponse> call, Response<CreateShipsResponse> response) {
-                                        if (response.code() > 199 && response.code() < 301) {
-
-                                            //TODO : current time building + queue ???
-
-//                                            DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
-//                                            daoBuildingStatus.open();
-//                                            int currentTime = (int) (new Date().getTime() / 1000);
-//                                            daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
-
-                                            refreshShipData(userToken, adapter);
-
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Construction vaisseau lancée", Toast.LENGTH_LONG);
-                                            toast.show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<CreateShipsResponse> call, Throwable t) {
-
-                                    }
-                                });
-
-                            } else {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Impossible de lancer une construction sur ce vaisseau", Toast.LENGTH_LONG);
-                                toast.show();
-                            }
-                        }
-                    });
-
-                    listViewConstruction.setAdapter(adapter);
+                    GridViewFleet.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<GetShipsResponse> call, Throwable t) {
+            public void onFailure(Call<GetSpaceShipsResponse> call, Throwable t) {
                 Constant.ToastErrorConnection(getApplicationContext());
             }
 
@@ -153,7 +104,7 @@ public class SpaceShipActivity extends AppCompatActivity {
     }
 
 
-    private void refreshShipData(String userToken, final ShipAdapter adapter) {
+    private void refreshSpaceShipData(String userToken, final ShipAdapter adapter) {
         Call<GetShipsResponse> request = service.getShips(userToken);
 
         request.enqueue(new Callback<GetShipsResponse>() {

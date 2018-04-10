@@ -7,7 +7,7 @@ import android.os.Environment;
 
 
 public class OgameDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "OgameDB.db";
     //TODO : set DB name dynamic user log
 
@@ -32,6 +32,16 @@ public class OgameDB extends SQLiteOpenHelper {
     private static final String BUILDING_STATE_TABLE_CREATE = "CREATE TABLE " + BUILDING_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_BUILDING_ID + " TEXT, " +KEY_BUILDING + " TEXT, " +
             KEY_DATE_CONSTRUCTION + " TEXT);";
 
+    // ============== SEARCH STATE ===================
+
+    public static final String SEARCH_STATE_TABLE_NAME = "SearchState";
+    public static final String KEY_SEARCH_ID = "search_id";
+    public static final String KEY_SEARCHING = "searching";
+    public static final String KEY_DATE_SEARCHING = "dateSearching";
+
+    private static final String SEARCH_STATE_TABLE_CREATE = "CREATE TABLE " + SEARCH_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_SEARCH_ID + " TEXT, " +KEY_SEARCHING + " TEXT, " +
+            KEY_DATE_SEARCHING + " TEXT);";
+
 
     public OgameDB(Context context) {
         super(context, Environment.getExternalStorageDirectory()+"/"+DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,6 +51,7 @@ public class OgameDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(USER_TABLE_CREATE);
         db.execSQL(BUILDING_STATE_TABLE_CREATE);
+        db.execSQL(SEARCH_STATE_TABLE_NAME);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -48,6 +59,7 @@ public class OgameDB extends SQLiteOpenHelper {
         //TODO : Create back of data before erase List<ofTables>
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + BUILDING_STATE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SEARCH_STATE_TABLE_NAME);
         onCreate(db);
     }
 }

@@ -6,7 +6,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 public class Ship {
 
-    private double amount;
+    private Integer amount;
     private Integer capacity;
     private Integer gasCost;
     private Integer life;

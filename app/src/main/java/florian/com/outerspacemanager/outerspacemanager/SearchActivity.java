@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +23,8 @@ import static java.lang.String.format;
 public class SearchActivity extends AppCompatActivity {
 
     private User user;
+    private Retrofit retrofit = Constant.retrofit;
+    final ApiService service = retrofit.create(ApiService.class);
     private List<Search> SearchListReceive;
 
     private TextView TextViewMetal;
@@ -76,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Retrofit retrofit = Constant.retrofit;
 
-        ApiService service = retrofit.create(ApiService.class);
+        final ApiService service = retrofit.create(ApiService.class);
 
         Call<GetSearchesResponse> request = service.getSearches(userToken);
 
@@ -84,11 +89,49 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetSearchesResponse> call, Response<GetSearchesResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
-                    SearchListReceive = (List<Search>)response.body().getSearches();
+                    SearchListReceive = (List<Search>) response.body().getSearches();
 
-                    SearchAdapter adapter = new SearchAdapter(SearchActivity.this, SearchListReceive, user);
-                    // TODO CLICK BUTTON
-//                    adapter.setOnItemClickListener(BuildingActivity.this);
+                    final SearchAdapter adapter = new SearchAdapter(SearchActivity.this, SearchListReceive, user);
+
+
+                    // CLICK on item
+                    adapter.setOnEventListener(new OnListViewChildrenClick() {
+                        @Override
+                        public void OnClick(final int id, View v) {
+                            if (v.isEnabled()) {
+
+                                Call<CreateSearchResponse> requestLaunchSearch = service.launchSearch(userToken, id);
+
+                                requestLaunchSearch.enqueue(new Callback<CreateSearchResponse>() {
+                                    @Override
+                                    public void onResponse(Call<CreateSearchResponse> call, Response<CreateSearchResponse> response) {
+                                        if (response.code() > 199 && response.code() < 301) {
+
+                                            DAOSearchStatus daoSearchStatus = new DAOSearchStatus(getApplicationContext());
+                                            daoSearchStatus.open();
+                                            int currentTime = (int) (new Date().getTime() / 1000);
+                                            daoSearchStatus.createSearchStatus(id, "true", String.valueOf(currentTime));
+
+                                            refreshSearchData(userToken, adapter);
+
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Recherche lancée", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CreateSearchResponse> call, Throwable t) {
+
+                                    }
+                                });
+
+                            } else {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Impossible de lancer une recherche sur cette technologie", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }
+                    });
+
 
                     listViewConstruction.setAdapter(adapter);
 
@@ -102,5 +145,24 @@ public class SearchActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    private void refreshSearchData(String userToken, final SearchAdapter adapter) {
+        Call<GetSearchesResponse> request = service.getSearches(userToken);
+
+        request.enqueue(new Callback<GetSearchesResponse>() {
+            @Override
+            public void onResponse(Call<GetSearchesResponse> call, Response<GetSearchesResponse> response) {
+                if (response.code() > 199 && response.code() < 301) {
+                    adapter.clear();
+                    adapter.addAll(response.body().getSearches());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetSearchesResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

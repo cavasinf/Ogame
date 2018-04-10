@@ -35,7 +35,7 @@ public class BuildingRepository {
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     BuildingListReceive = (List<Building>) response.body().getBuildings();
-
+                    //TODO effect building
                     for (Building building : BuildingListReceive) {
                         /*if (Objects.equals(building.getEffect(), effectToSearch))
                             return building;*/

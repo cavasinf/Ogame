@@ -16,8 +16,8 @@ public class Constant {
 
     public static final String PREFS_USER = "UserPrefs";
     public static final String EXTRA_USER = "UserExtra";
-    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
-//    public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
+//    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
+    public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
@@ -25,7 +25,7 @@ public class Constant {
             .build();
 
 
-        public static void ToastErrorConnection(Context ApplicationContext) {
+    public static void ToastErrorConnection(Context ApplicationContext) {
         Toast toast = Toast.makeText(ApplicationContext, "Erreur lors de la connexion ! \n Verifier votre connexion internet", Toast.LENGTH_LONG);
         toast.show();
     }

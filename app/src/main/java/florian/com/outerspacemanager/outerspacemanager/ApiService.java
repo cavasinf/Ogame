@@ -12,7 +12,6 @@ public interface ApiService {
 
     // AUTH
     //
-
     @POST("auth/create")
     Call<CreateUserResponse> createUser(@Body User user);
 
@@ -24,7 +23,6 @@ public interface ApiService {
 
     // BUILDING
     //
-
     @GET("buildings")
     Call<GetBuildingsResponse> getBuildings(@Header("x-access-token") String token);
 
@@ -34,20 +32,26 @@ public interface ApiService {
     @POST("buildings/create/{buildingId}")
     Call<CreateBuildingsResponse> createBuildings(@Header("x-access-token") String token, @Path("buildingId") int id);
 
+    // SPACE SHIP
+    //
+    @GET("fleet/list")
+    Call<GetSpaceShipsResponse> getSpaceShip(@Header("x-access-token") String token);
+
     // SHIP
     //
-
     @GET("ships")
     Call<GetShipsResponse> getShips(@Header("x-access-token") String token);
 
     @POST("ships/create/{shipId}")
     Call<CreateShipsResponse> createShips(@Header("x-access-token") String token, @Path("shipId") int id, @Body RequestBody body);
 
-
     // SEARCH
     //
     @GET("searches/list")
     Call<GetSearchesResponse> getSearches(@Header("x-access-token") String token);
+
+    @GET("searches/create/:searchId")
+    Call<CreateSearchResponse> launchSearch(@Header("x-access-token") String token, @Path("searchId") int id);
 
     // GALAXY
     //

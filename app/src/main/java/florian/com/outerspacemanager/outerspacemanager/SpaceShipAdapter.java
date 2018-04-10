@@ -68,9 +68,10 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
 
         //il ne reste plus qu'à remplir notre vue
         String shipName = Normalizer.normalize(ship.getName().replace(" ", "_").replace("'", ""), Normalizer.Form.NFD);
-        shipName = shipName.replaceAll("[^\\p{ASCII}]", ""); //TODO : + "_rounded"
+        shipName = shipName.replaceAll("[^\\p{ASCII}]", "")+ "_rounded";
+        shipName += "_enabled";
         viewHolder.imageViewFleetID.setImageResource(getContext().getResources().getIdentifier(shipName, "drawable", getContext().getPackageName()));
-        viewHolder.textViewNumberFleetID.setText(ship.getAmount()+"");
+        viewHolder.textViewNumberFleetID.setText(Math.round(ship.getAmount())+"");
 
         final BuildingViewHolder finalViewHolder = viewHolder;
         viewHolder.imageViewSetMaxID.setOnClickListener(new View.OnClickListener() {

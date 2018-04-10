@@ -4,22 +4,63 @@
     <drawable name="Mine_automatisee">@drawable/batiment_usine_metal</drawable>
     <drawable name="Spatioport">@drawable/batiment_dock_spatial</drawable>
     <drawable name="Usine_de_nanites">@drawable/batiment_nanite</drawable>
+
+
     <!--Ship-->
     <drawable name="Bombardier">@drawable/ship_bombardier</drawable>
+
     <drawable name="Chasseur_leger">@drawable/ship_chasseur_leger</drawable>
+    <drawable name="Chasseur_leger_rounded_enabled">@drawable/ship_chasseur_leger_rounded_enabled</drawable>
+    <drawable name="Chasseur_leger_rounded_blocked">@drawable/ship_chasseur_leger_rounded_blocked</drawable>
+    <drawable name="Chasseur_leger_rounded_disabled">@drawable/ship_chasseur_leger_rounded_disabled</drawable>
+
+
     <drawable name="Chasseur_lourd">@drawable/ship_chasseur_lourd</drawable>
+    <drawable name="Chasseur_lourd_rounded_enabled">@drawable/ship_chasseur_lourd_rounded_enabled</drawable>
+    <drawable name="Chasseur_lourd_rounded_blocked">@drawable/ship_chasseur_lourd_rounded_blocked</drawable>
+    <drawable name="Chasseur_lourd_rounded_disabled">@drawable/ship_chasseur_lourd_rounded_disabled</drawable>
+
     <drawable name="Croiseur">@drawable/ship_croiseur</drawable>
-    <drawable name="Destructeur">@drawable/ship_destructeur</drawable>
+    <drawable name="Croiseur_rounded_enabled">@drawable/ship_croiseur_rounded_enabled</drawable>
+    <drawable name="Croiseur_rounded_blocked">@drawable/ship_croiseur_rounded_blocked</drawable>
+    <drawable name="Croiseur_rounded_disabled">@drawable/ship_croiseur_rounded_disabled</drawable>
+
+    <!--<drawable name="Destructeur">@drawable/ship_destructeur</drawable>-->
+    <!--<drawable name="Destructeur_rounded_enabled">@drawable/ship_destructeur_rounded_enabled</drawable>-->
+    <!--<drawable name="Destructeur_rounded_blocked">@drawable/ship_destructeur_rounded_blocked</drawable>-->
+    <!--<drawable name="Destructeur_rounded_disabled">@drawable/ship_destructeur_rounded_disabled</drawable>-->
+
     <drawable name="Destroyer">@drawable/ship_destructeur</drawable>
+    <drawable name="Destroyer_rounded_enabled">@drawable/ship_destructeur_rounded_enabled</drawable>
+
+    <drawable name="Destroyer_rounded_blocked">@drawable/ship_destructeur_rounded_blocked</drawable>
+    <drawable name="Destroyer_rounded_disabled">@drawable/ship_destructeur_rounded_disabled</drawable>
+
     <drawable name="Etoile_de_la_mort">@drawable/ship_etoile_de_la_mort</drawable>
+    <drawable name="Etoile_de_la_mort_rounded_enabled">@drawable/ship_etoile_de_la_mort_rounded_enabled</drawable>
+    <drawable name="Etoile_de_la_mort_rounded_blocked">@drawable/ship_etoile_de_la_mort_rounded_blocked</drawable>
+    <drawable name="Etoile_de_la_mort_rounded_disabled">@drawable/ship_etoile_de_la_mort_rounded_disabled</drawable>
+
     <drawable name="Recycleur">@drawable/ship_recycleur</drawable>
+
     <drawable name="Sonde_despionnage">@drawable/ship_sonde_despionnage</drawable>
+    <drawable name="Sonde_despionnage_rounded_enabled">@drawable/ship_sonde_despionnage_rounded_enabled</drawable>
+    <drawable name="Sonde_despionnage_rounded_blocked">@drawable/ship_sonde_despionnage_rounded_blocked</drawable>
+    <drawable name="Sonde_despionnage_rounded_disabled">@drawable/ship_sonde_despionnage_rounded_disabled</drawable>
+
     <drawable name="Petit_transporteur">@drawable/ship_petit_transporteur</drawable>
+
     <drawable name="Grand_transporteur">@drawable/ship_grand_transporteur</drawable>
+
     <drawable name="Satellite_solaire">@drawable/ship_satellite_solaire</drawable>
+
     <drawable name="Traqueur">@drawable/ship_traqueur</drawable>
+
     <drawable name="Vaisseau_de_bataille">@drawable/ship_vaisseau_de_bataille</drawable>
+
     <drawable name="vaisseau_de_colonisation">@drawable/ship_vaisseau_de_colonisation</drawable>
+
+
     <!--Building-->
     <drawable name="Recherche_robotique">@drawable/search_recherche_robotique</drawable>
     <drawable name="Recherche_moteurs">@drawable/search_recherche_moteurs</drawable>

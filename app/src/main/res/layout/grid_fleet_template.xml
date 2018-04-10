@@ -63,15 +63,14 @@
 
                 <ImageView
                     android:id="@+id/imageViewSetMaxID"
-                    app:srcCompat="@drawable/set_max"
+                    app:srcCompat="@drawable/button_select_max"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1" />
 
-                <!--TODO : selected drawable-->
                 <ImageView
                     android:id="@+id/imageViewSetZeroID"
-                    app:srcCompat="@drawable/set_zero"
+                    app:srcCompat="@drawable/button_select_zero"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1" />

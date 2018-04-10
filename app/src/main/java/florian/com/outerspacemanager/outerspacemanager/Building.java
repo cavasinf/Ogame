@@ -101,7 +101,7 @@ public class Building {
     public Integer getTimeToBuild(boolean isItForDatabase) {
         Integer timeWithoutSpeedBuilding;
         if (!isItForDatabase)
-            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;
+            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;git add
         else
             timeWithoutSpeedBuilding =  timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
 

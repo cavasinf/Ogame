@@ -98,6 +98,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
         final BuildingViewHolder finalViewHolder = viewHolder;
 
+        //TODO : button click search
+
         if (finalViewHolder.timer != null) {
             finalViewHolder.timer.cancel();
         }
@@ -106,33 +108,11 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
                 if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())) {
                     if (isTimerLaunched != null) {
                         if (!isTimerLaunched.containsKey(building.getBuildingId())) {
-                            CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
-                                public void onTick(long millisUntilDone) {
-                                    isTimerLaunched.put(building.getBuildingId(), true);
-                                    finalViewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
-                                }
 
-                                public void onFinish() {
-                                    finalViewHolder.textViewProdTimeID.setText("DONE");
-                                    isTimerLaunched.put(building.getBuildingId(), false);
-                                }
-                            }.start();
-                            finalViewHolder.timer = counter;
-                            //startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+                            startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, finalViewHolder);
                         }
                     } else {
-                        CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
-                            public void onTick(long millisUntilDone) {
-                                isTimerLaunched.put(building.getBuildingId(), true);
-                                finalViewHolder.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
-                            }
-
-                            public void onFinish() {
-                                finalViewHolder.textViewProdTimeID.setText("DONE");
-                                isTimerLaunched.put(building.getBuildingId(), false);
-                            }
-                        }.start();
-                        //startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, viewHolder);
+                        startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, finalViewHolder);
                     }
                     break;
                 }
@@ -182,8 +162,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private void startTimer(long time, final Building building, final BuildingStatus buildingStatus, final BuildingViewHolder viewHolderToChange) {
         final BuildingViewHolder storedViewHolderToChange = viewHolderToChange;
-        isTimerLaunched.put(building.getBuildingId(), true);
-        CountDownTimer counter = new CountDownTimer(time * 1000, 1000) {
+        CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
             public void onTick(long millisUntilDone) {
                 isTimerLaunched.put(building.getBuildingId(), true);
                 storedViewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
@@ -194,5 +173,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
                 isTimerLaunched.put(building.getBuildingId(), false);
             }
         }.start();
+        storedViewHolderToChange.timer = counter;
     }
 }

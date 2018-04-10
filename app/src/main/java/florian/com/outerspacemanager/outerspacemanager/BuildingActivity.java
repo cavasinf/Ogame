@@ -183,8 +183,6 @@ public class BuildingActivity extends AppCompatActivity {
                     });
                     listViewConstruction.setAdapter(adapter);
 
-                    // TODO : set user In DB
-                    //
                 }
             }
 
