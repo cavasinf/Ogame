@@ -1,11 +1,15 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
+import java.util.Date;
+import java.util.UUID;
+
 /**
  * Created by PC  FLORIAN on 04/03/2018.
  */
 
 public class Search {
 
+    private UUID id;
     private Integer level;
     private Boolean building;
     private Integer amountOfEffectByLevel;
@@ -20,27 +24,19 @@ public class Search {
     private Integer timeToBuildByLevel;
     private Integer timeToBuildLevel0;
 
-    public Search(Integer level, Boolean building, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, String effect, Integer gasCostByLevel, Integer gasCostLevel0, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer searchId, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
-        this.level = level;
-        this.building = building;
-        this.amountOfEffectByLevel = amountOfEffectByLevel;
-        this.amountOfEffectLevel0 = amountOfEffectLevel0;
-        this.effect = effect;
-        this.gasCostByLevel = gasCostByLevel;
-        this.gasCostLevel0 = gasCostLevel0;
-        this.mineralCostByLevel = mineralCostByLevel;
-        this.mineralCostLevel0 = mineralCostLevel0;
-        this.name = name;
-        this.searchId = searchId;
-        this.timeToBuildByLevel = timeToBuildByLevel;
-        this.timeToBuildLevel0 = timeToBuildLevel0;
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Integer getLevel() {
         return level;
     }
 
-    public Boolean getBuilding() {
+    public Boolean isBuilding() {
         return building;
     }
 
@@ -86,5 +82,75 @@ public class Search {
 
     public Integer getTimeToBuildLevel0() {
         return timeToBuildLevel0;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setIsBuilding(Boolean building) {
+        this.building = building;
+    }
+
+    public void setAmountOfEffectByLevel(Integer amountOfEffectByLevel) {
+        this.amountOfEffectByLevel = amountOfEffectByLevel;
+    }
+
+    public void setAmountOfEffectLevel0(Integer amountOfEffectLevel0) {
+        this.amountOfEffectLevel0 = amountOfEffectLevel0;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
+
+    public void setGasCostByLevel(Integer gasCostByLevel) {
+        this.gasCostByLevel = gasCostByLevel;
+    }
+
+    public void setGasCostLevel0(Integer gasCostLevel0) {
+        this.gasCostLevel0 = gasCostLevel0;
+    }
+
+    public void setMineralCostByLevel(Integer mineralCostByLevel) {
+        this.mineralCostByLevel = mineralCostByLevel;
+    }
+
+    public void setMineralCostLevel0(Integer mineralCostLevel0) {
+        this.mineralCostLevel0 = mineralCostLevel0;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSearchId(Integer searchId) {
+        this.searchId = searchId;
+    }
+
+    public void setTimeToBuildByLevel(Integer timeToBuildByLevel) {
+        this.timeToBuildByLevel = timeToBuildByLevel;
+    }
+
+    public void setTimeToBuildLevel0(Integer timeToBuildLevel0) {
+        this.timeToBuildLevel0 = timeToBuildLevel0;
+    }
+
+    // ============== CUSTOM ===============
+
+    public Integer getTimeToBuild(boolean isItForDatabase) {
+        Integer timeWithoutSpeedBuilding;
+        if (!isItForDatabase)
+            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;
+        else
+            timeWithoutSpeedBuilding =  timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
+
+        return timeWithoutSpeedBuilding;
+    }
+
+    public Integer getSearchTimeLeft(String timeLaunched){
+        int currentTime = (int) (new Date().getTime()/1000);
+        Integer timeBetween = currentTime - Integer.parseInt(timeLaunched);
+        return getTimeToBuild(false) - timeBetween;
     }
 }

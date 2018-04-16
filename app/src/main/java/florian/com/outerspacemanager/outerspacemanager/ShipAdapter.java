@@ -1,7 +1,9 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -36,6 +38,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
     }
 
     private User user;
+    private Building buildingSpatioport;
 
     public ShipAdapter(@NonNull Context context, @NonNull List<Ship> ships, @NonNull User user) {
         super(context, R.layout.row_ship_template, ships);
@@ -51,6 +54,11 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_ship_template, parent, false);
         }
 
+        DAOBuilding daoBuilding = new DAOBuilding(getContext());
+        Environment.getExternalStorageDirectory();
+        daoBuilding.open();
+        buildingSpatioport = daoBuilding.getBuildingByName("Spatioport");
+
         BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
         if (viewHolder == null) {
             viewHolder = new BuildingViewHolder();
@@ -62,6 +70,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
             viewHolder.textViewConstructionLevelID = (TextView) convertView.findViewById(R.id.textViewConstructionLevelID);
             viewHolder.RelativeLayoutConstructButtonID = (RelativeLayout) convertView.findViewById(R.id.RelativeLayoutConstructButtonID);
             viewHolder.editTextProdCountID = (EditText) convertView.findViewById(R.id.editTextProdCountID);
+            viewHolder.imageViewConstructButtonBackgroundID = (ImageView) convertView.findViewById(R.id.imageViewConstructButtonBackgroundID);
 
             convertView.setTag(viewHolder);
         }
@@ -77,6 +86,8 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         viewHolder.textViewProdTimeID.setText(round(ship.getTimeToBuild()) + "s");
         viewHolder.textViewRessource1ID.setText(format("%,d", ship.getMineralCost()));
         viewHolder.textViewRessource2ID.setText(format("%,d", ship.getGasCost()));
+        viewHolder.RelativeLayoutConstructButtonID.setEnabled(ship.getSpatioportLevelNeeded() <= buildingSpatioport.getLevel());
+        viewHolder.imageViewConstructButtonBackgroundID.setEnabled(ship.getSpatioportLevelNeeded() <= buildingSpatioport.getLevel());
         viewHolder.editTextProdCountID.setText("");
 
         final BuildingViewHolder finalViewHolder = viewHolder;
@@ -105,6 +116,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         public TextView textViewRessource2ID;
         public TextView textViewConstructionLevelID;
         public RelativeLayout RelativeLayoutConstructButtonID;
+        public ImageView imageViewConstructButtonBackgroundID;
         public EditText editTextProdCountID;
     }
 }

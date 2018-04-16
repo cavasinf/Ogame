@@ -50,7 +50,7 @@ public interface ApiService {
     @GET("searches/list")
     Call<GetSearchesResponse> getSearches(@Header("x-access-token") String token);
 
-    @GET("searches/create/:searchId")
+    @POST("searches/create/{searchId}")
     Call<CreateSearchResponse> launchSearch(@Header("x-access-token") String token, @Path("searchId") int id);
 
     // GALAXY

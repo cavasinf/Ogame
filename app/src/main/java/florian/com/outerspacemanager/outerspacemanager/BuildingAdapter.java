@@ -3,6 +3,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 import android.content.Context;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -48,6 +49,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
 
     private User user;
     private Date currentDate;
+    private Building buildingUsineDeNanite;
+    private Search searchRobotique;
 
     public BuildingAdapter(@NonNull Context context, @NonNull List<Building> buildings, @NonNull User user, Date currentDate, List<BuildingStatus> listBuildingStatus) {
         super(context, R.layout.row_construction_template, buildings);
@@ -64,6 +67,16 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template, parent, false);
         }
+
+        DAOBuilding daoBuilding = new DAOBuilding(getContext());
+        Environment.getExternalStorageDirectory();
+        daoBuilding.open();
+        buildingUsineDeNanite = daoBuilding.getBuildingByEffect("speed_building");
+
+        DAOSearch daoSearch = new DAOSearch(getContext());
+        Environment.getExternalStorageDirectory();
+        daoSearch.open();
+        searchRobotique = daoSearch.getSearchByEffect("speed_building");
 
         BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
         if (viewHolder == null) {
@@ -98,7 +111,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.imageViewConstructButtonBackgroundID.setEnabled(!building.isBuilding());
         final BuildingViewHolder finalViewHolder = viewHolder;
 
-        //TODO : button click search
 
         if (finalViewHolder.timer != null) {
             finalViewHolder.timer.cancel();
@@ -109,17 +121,17 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
                     if (isTimerLaunched != null) {
                         if (!isTimerLaunched.containsKey(building.getBuildingId())) {
 
-                            startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, finalViewHolder);
+                            startTimer(building, buildingStatus, finalViewHolder);
                         }
                     } else {
-                        startTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()), building, buildingStatus, finalViewHolder);
+                        startTimer(building, buildingStatus, finalViewHolder);
                     }
                     break;
                 }
             }
 
         } else {
-            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuild(false)) + "s");
+            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuild(false) - amountSecondSpeedEffect()) + "s ");
         }
 
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
@@ -160,12 +172,13 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         public CountDownTimer timer;
     }
 
-    private void startTimer(long time, final Building building, final BuildingStatus buildingStatus, final BuildingViewHolder viewHolderToChange) {
+    private void startTimer(final Building building, final BuildingStatus buildingStatus, final BuildingViewHolder viewHolderToChange) {
         final BuildingViewHolder storedViewHolderToChange = viewHolderToChange;
-        CountDownTimer counter = new CountDownTimer(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) * 1000, 1000) {
+        // Define time for counter : (building time without effect - (building effect + search effect) * 1000)
+        CountDownTimer counter = new CountDownTimer((building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect()) * 1000, 1000) {
             public void onTick(long millisUntilDone) {
                 isTimerLaunched.put(building.getBuildingId(), true);
-                storedViewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeft(buildingStatus.getDateConstruction()) + "s");
+                storedViewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect() + "s");
             }
 
             public void onFinish() {
@@ -174,5 +187,9 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             }
         }.start();
         storedViewHolderToChange.timer = counter;
+    }
+
+    private int amountSecondSpeedEffect() {
+        return buildingUsineDeNanite.getLevel() * buildingUsineDeNanite.getAmountOfEffectByLevel() + searchRobotique.getLevel() * searchRobotique.getAmountOfEffectByLevel();
     }
 }

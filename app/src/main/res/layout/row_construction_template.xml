@@ -9,13 +9,19 @@
     android:orientation="horizontal"
     android:visibility="visible">
 
-    <ImageView
-        android:id="@+id/imageViewConstructionID"
+    <FrameLayout
         android:layout_width="105dp"
         android:layout_height="114dp"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/batiment_usine_metal" />
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageViewConstructionID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/batiment_usine_metal" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayoutCol2ID"
@@ -28,7 +34,7 @@
 
         <TextView
             android:id="@+id/textView2ConstructionTitleID"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Mine de métal"
@@ -36,30 +42,22 @@
             android:textStyle="bold"
             tools:text="Mine de métal" />
 
-        <LinearLayout
-            android:id="@+id/LinearLayoutText1ID"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textViewProdTextID"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:text="Temps prod : "
+            android:textColor="@android:color/background_light" />
 
-            <TextView
-                android:id="@+id/textViewProdTextID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Temps prod : "
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:id="@+id/textViewProdTimeID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="15s"
-                android:textColor="@android:color/background_light" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textViewProdTimeID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/background_light"
+            tools:text="1500s" />
 
         <LinearLayout
             android:id="@+id/LinearLayoutText2ID"

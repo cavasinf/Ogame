@@ -111,13 +111,7 @@ public class ShipActivity extends AppCompatActivity {
                                     public void onResponse(Call<CreateShipsResponse> call, Response<CreateShipsResponse> response) {
                                         if (response.code() > 199 && response.code() < 301) {
 
-                                            //TODO : current time building + queue ???
-
-//                                            DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getApplicationContext());
-//                                            daoBuildingStatus.open();
-//                                            int currentTime = (int) (new Date().getTime() / 1000);
-//                                            daoBuildingStatus.createBuildingStatus(id, "true", String.valueOf(currentTime));
-
+                                            // TODO : current time building + queue ???
                                             refreshShipData(userToken, adapter);
 
                                             Toast toast = Toast.makeText(getApplicationContext(), "Construction vaisseau lancée", Toast.LENGTH_LONG);

@@ -121,8 +121,17 @@ public class BuildingActivity extends AppCompatActivity {
 
                     List<BuildingStatus> listOfBuildingStatusToRemove = new ArrayList<>();
 
-                    //Clear building construction in DB
+                    // open building DB
+                    DAOBuilding daoBuilding = new DAOBuilding(getApplicationContext());
+                    daoBuilding.open();
+                    // clear all buildings DB
+                    daoBuilding.deleteAllBuildings();
+
                     for (Building building : BuildingListReceive) {
+                        // add building to DB
+                        daoBuilding.createBuilding(building.getBuildingId(),building.getLevel(),building.getAmountOfEffectByLevel(),building.getAmountOfEffectLevel0(),building.isBuilding(),building.getEffect(),building.getGasCostByLevel(),building.getGasCostLevel0(),building.getImageUrl(),building.getMineralCostByLevel(),building.getMineralCostLevel0(),building.getName(),building.getTimeToBuildByLevel(),building.getTimeToBuildLevel0());
+
+                        //Clear building construction in DB
                         for (BuildingStatus buildingStatus : listBuildingStatus) {
                             // if building in database and construction is done
                             if (buildingStatus.getBuildingId() != null) {

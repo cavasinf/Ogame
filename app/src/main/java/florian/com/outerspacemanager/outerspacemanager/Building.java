@@ -1,8 +1,10 @@
 package florian.com.outerspacemanager.outerspacemanager;
 
+import android.os.Environment;
 import android.text.format.Time;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by PC  FLORIAN on 24/01/2018.
@@ -10,6 +12,7 @@ import java.util.Date;
 
 public class Building {
 
+    private UUID id;
     private Integer level;
     private Integer amountOfEffectByLevel;
     private Integer amountOfEffectLevel0;
@@ -25,21 +28,12 @@ public class Building {
     private Integer timeToBuildByLevel;
     private Integer timeToBuildLevel0;
 
-    public Building(Integer level, Integer amountOfEffectByLevel, Integer amountOfEffectLevel0, Integer buildingId, Boolean building, String effect, Integer gasCostByLevel, Integer gasCostLevel0, String imageUrl, Integer mineralCostByLevel, Integer mineralCostLevel0, String name, Integer timeToBuildByLevel, Integer timeToBuildLevel0) {
-        this.level = level;
-        this.amountOfEffectByLevel = amountOfEffectByLevel;
-        this.amountOfEffectLevel0 = amountOfEffectLevel0;
-        this.buildingId = buildingId;
-        this.building = building;
-        this.effect = effect;
-        this.gasCostByLevel = gasCostByLevel;
-        this.gasCostLevel0 = gasCostLevel0;
-        this.imageUrl = imageUrl;
-        this.mineralCostByLevel = mineralCostByLevel;
-        this.mineralCostLevel0 = mineralCostLevel0;
-        this.name = name;
-        this.timeToBuildByLevel = timeToBuildByLevel;
-        this.timeToBuildLevel0 = timeToBuildLevel0;
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Integer getLevel() {
@@ -98,17 +92,76 @@ public class Building {
         return timeToBuildLevel0;
     }
 
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setAmountOfEffectByLevel(Integer amountOfEffectByLevel) {
+        this.amountOfEffectByLevel = amountOfEffectByLevel;
+    }
+
+    public void setAmountOfEffectLevel0(Integer amountOfEffectLevel0) {
+        this.amountOfEffectLevel0 = amountOfEffectLevel0;
+    }
+
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public void setIsBuilding(Boolean building) {
+        this.building = building;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
+
+    public void setGasCostByLevel(Integer gasCostByLevel) {
+        this.gasCostByLevel = gasCostByLevel;
+    }
+
+    public void setGasCostLevel0(Integer gasCostLevel0) {
+        this.gasCostLevel0 = gasCostLevel0;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setMineralCostByLevel(Integer mineralCostByLevel) {
+        this.mineralCostByLevel = mineralCostByLevel;
+    }
+
+    public void setMineralCostLevel0(Integer mineralCostLevel0) {
+        this.mineralCostLevel0 = mineralCostLevel0;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTimeToBuildByLevel(Integer timeToBuildByLevel) {
+        this.timeToBuildByLevel = timeToBuildByLevel;
+    }
+
+    public void setTimeToBuildLevel0(Integer timeToBuildLevel0) {
+        this.timeToBuildLevel0 = timeToBuildLevel0;
+    }
+
+    // ============== CUSTOM ==============
+
     public Integer getTimeToBuild(boolean isItForDatabase) {
         Integer timeWithoutSpeedBuilding;
+
         if (!isItForDatabase)
-            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;git add
+            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;
         else
             timeWithoutSpeedBuilding =  timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
 
-        return timeWithoutSpeedBuilding; //TODO minus speed_effect
+        return timeWithoutSpeedBuilding;
     }
 
-    public Integer getBuildingTimeLeft(String timeLaunched){
+    public Integer getBuildingTimeLeftWithoutEffects(String timeLaunched){
         int currentTime = (int) (new Date().getTime()/1000);
         Integer timeBetween = currentTime - Integer.parseInt(timeLaunched);
         return getTimeToBuild(false) - timeBetween;

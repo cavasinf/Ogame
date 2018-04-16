@@ -3,14 +3,18 @@ package florian.com.outerspacemanager.outerspacemanager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +34,9 @@ public class SearchActivity extends AppCompatActivity {
     private TextView TextViewMetal;
     private TextView TextViewDeut;
     private ListView listViewConstruction;
+
+    private Date currentDate;
+    private List<SearchStatus> listSearchStatus = new ArrayList<SearchStatus>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +97,48 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Call<GetSearchesResponse> call, Response<GetSearchesResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     SearchListReceive = (List<Search>) response.body().getSearches();
+                    currentDate = Calendar.getInstance().getTime();
 
-                    final SearchAdapter adapter = new SearchAdapter(SearchActivity.this, SearchListReceive, user);
+
+                    DAOSearchStatus daoSearchStatus = new DAOSearchStatus(getApplicationContext());
+                    Environment.getExternalStorageDirectory();
+                    daoSearchStatus.open();
+                    listSearchStatus = daoSearchStatus.getAllSearchStatus();
+
+                    List<SearchStatus> listOfSearchStatusToRemove = new ArrayList<>();
+
+                    // open search DB
+                    DAOSearch daoSearch = new DAOSearch(getApplicationContext());
+                    daoSearch.open();
+                    // clear all searches DB
+                    daoSearch.deleteAllSearches();
+
+
+                    for (Search search : SearchListReceive) {
+                        // add building to DB
+                        daoSearch.createSearch(search.getSearchId(), search.getLevel(), search.getAmountOfEffectByLevel(), search.getAmountOfEffectLevel0(), search.isBuilding(), search.getEffect(), search.getGasCostByLevel(), search.getGasCostLevel0(), search.getMineralCostByLevel(), search.getMineralCostLevel0(), search.getName(), search.getTimeToBuildByLevel(), search.getTimeToBuildLevel0());
+
+
+                        //Clear search construction in DB
+                        for (SearchStatus searchStatus : listSearchStatus) {
+                            // if search in database and construction is done
+                            if (searchStatus.getSearchId() != null) {
+                                if (Objects.equals(search.getSearchId().toString(), searchStatus.getSearchId())) {
+                                    int currentTime = (int) (new Date().getTime() / 1000);
+                                    if (currentTime - Integer.parseInt(searchStatus.getDateSearching()) > search.getTimeToBuild(false)) {
+                                        if (!daoSearchStatus.deleteSearchState(search.getSearchId()))
+                                            Constant.displayToast(getApplicationContext(), "Error when delete in database");
+                                        listOfSearchStatusToRemove.add(searchStatus);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (SearchStatus searchStatus : listOfSearchStatusToRemove) {
+                        listSearchStatus.remove(searchStatus);
+                    }
+
+                    final SearchAdapter adapter = new SearchAdapter(SearchActivity.this, SearchListReceive, user, currentDate, listSearchStatus);
 
 
                     // CLICK on item
@@ -131,10 +178,7 @@ public class SearchActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-
                     listViewConstruction.setAdapter(adapter);
-
                 }
             }
 
@@ -142,9 +186,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onFailure(Call<GetSearchesResponse> call, Throwable t) {
                 Constant.ToastErrorConnection(getApplicationContext());
             }
-
         });
-
     }
 
     private void refreshSearchData(String userToken, final SearchAdapter adapter) {
