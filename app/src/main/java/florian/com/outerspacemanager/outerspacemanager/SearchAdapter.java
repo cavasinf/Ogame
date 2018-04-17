@@ -45,7 +45,7 @@ public class SearchAdapter extends ArrayAdapter<Search> {
     private Date currentDate;
 
     public SearchAdapter(@NonNull Context context , @NonNull List<Search> searches, @NonNull User user, Date currentDate, List<SearchStatus> listSearchStatus) {
-        super(context, R.layout.row_search_template, searches);
+        super(context, R.layout.row_construction_template, searches);
         this.user = user;
         this.currentDate = currentDate;
         this.listSearchStatus = listSearchStatus;
@@ -57,7 +57,7 @@ public class SearchAdapter extends ArrayAdapter<Search> {
     public View getView(int position, View convertView, @NonNull final ViewGroup parent) {
 
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_search_template,parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template,parent, false);
         }
 
         SearchViewHolder viewHolder = (SearchViewHolder) convertView.getTag();
@@ -115,7 +115,8 @@ public class SearchAdapter extends ArrayAdapter<Search> {
             }
 
         } else {
-            viewHolder.textViewProdTimeID.setText(round(search.getTimeToBuild(false)) + "s");
+//            viewHolder.textViewProdTimeID.setText(round(search.getTimeToBuild(false)) + "s");
+            viewHolder.textViewProdTimeID.setText(Constant.getHumanDateFromTimeSecond(search.getTimeToBuild(false)));
         }
 
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +155,8 @@ public class SearchAdapter extends ArrayAdapter<Search> {
         CountDownTimer counter = new CountDownTimer(search.getSearchTimeLeft(searchStatus.getDateSearching()) * 1000, 1000) {
             public void onTick(long millisUntilDone) {
                 isTimerLaunched.put(search.getSearchId(), true);
-                storedViewHolderToChange.textViewProdTimeID.setText(search.getSearchTimeLeft(searchStatus.getDateSearching()) + "s");
+//                storedViewHolderToChange.textViewProdTimeID.setText(search.getSearchTimeLeft(searchStatus.getDateSearching()) + "s");
+                storedViewHolderToChange.textViewProdTimeID.setText(Constant.getHumanDateFromTimeSecond(Integer.parseInt(searchStatus.getDateSearching())));
             }
 
             public void onFinish() {

@@ -21,11 +21,14 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import static java.lang.Math.round;
 import static java.lang.String.format;
@@ -42,6 +45,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
     private int delay = 100; //milliseconds
     private List<BuildingStatus> listBuildingStatus = new ArrayList<BuildingStatus>();
     private ArrayMap<Integer, Boolean> isTimerLaunched = new ArrayMap<>();
+
 
     public void setOnEventListener(OnListViewChildrenClick listener) {
         mOnListViewChildrenClick = listener;
@@ -67,6 +71,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template, parent, false);
         }
+
+
 
         DAOBuilding daoBuilding = new DAOBuilding(getContext());
         Environment.getExternalStorageDirectory();
@@ -131,7 +137,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             }
 
         } else {
-            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuild(false) - amountSecondSpeedEffect()) + "s ");
+//            viewHolder.textViewProdTimeID.setText(round(building.getTimeToBuild(false) - amountSecondSpeedEffect()) + "s ");
+            viewHolder.textViewProdTimeID.setText(Constant.getHumanDateFromTimeSecond(building.getTimeToBuild(false) - amountSecondSpeedEffect()));
         }
 
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +185,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         CountDownTimer counter = new CountDownTimer((building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect()) * 1000, 1000) {
             public void onTick(long millisUntilDone) {
                 isTimerLaunched.put(building.getBuildingId(), true);
-                storedViewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect() + "s");
+//                storedViewHolderToChange.textViewProdTimeID.setText(building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect() + "s");
+                storedViewHolderToChange.textViewProdTimeID.setText(Constant.getHumanDateFromTimeSecond(building.getBuildingTimeLeftWithoutEffects(buildingStatus.getDateConstruction()) - amountSecondSpeedEffect()));
             }
 
             public void onFinish() {

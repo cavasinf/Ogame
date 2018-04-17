@@ -50,6 +50,7 @@ public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
         GalaxyUserViewHolder viewHolder = (GalaxyUserViewHolder) convertView.getTag();
         if(viewHolder == null){
             viewHolder = new GalaxyUserViewHolder();
+            viewHolder.imageViewPlanetID = (ImageView) convertView.findViewById(R.id.imageViewPlanetID);
             viewHolder.textViewUsernameID = (TextView) convertView.findViewById(R.id.textViewUsernameID);
             viewHolder.textViewScoreID = (TextView) convertView.findViewById(R.id.textViewScoreID);
 
@@ -60,6 +61,8 @@ public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
         GalaxyUser galaxyUser = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
+        String planetImageName = Constant.definePlanetByUserName(galaxyUser.getUsername());
+        viewHolder.imageViewPlanetID.setImageResource(getContext().getResources().getIdentifier(planetImageName, "drawable", getContext().getPackageName()));
         viewHolder.textViewUsernameID.setText(galaxyUser.getUsername());
         viewHolder.textViewScoreID.setText(format("%,d", round(galaxyUser.getPoints())));
         // TODO CLICK button
@@ -75,6 +78,7 @@ public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
     }
 
     class GalaxyUserViewHolder {
+        public ImageView imageViewPlanetID;
         public TextView textViewUsernameID;
         public TextView textViewScoreID;
     }

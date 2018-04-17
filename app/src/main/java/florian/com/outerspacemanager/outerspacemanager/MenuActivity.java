@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
     private ImageView ImageViewBackgroundResearch;
     private ImageView ImageViewBackgroundSpaceShip;
     private ImageView ImageViewBackgroundGalaxy;
+    private ImageView ImageViewPlanetID;
 
     public static User user;
 
@@ -58,8 +59,9 @@ public class MenuActivity extends AppCompatActivity {
         ImageViewBackgroundBuilding= findViewById(R.id.imageViewBackgroundBuildingID);
         ImageViewBackgroundShip= findViewById(R.id.imageViewBackgroundShipID);
         ImageViewBackgroundResearch = findViewById(R.id.imageViewBackgroundResearchID);
-        ImageViewBackgroundSpaceShip= findViewById(R.id.imageViewBackgroundSpaceShipID);
-        ImageViewBackgroundGalaxy= findViewById(R.id.imageViewBackgroundGalaxyID);
+        ImageViewBackgroundSpaceShip = findViewById(R.id.imageViewBackgroundSpaceShipID);
+        ImageViewBackgroundGalaxy = findViewById(R.id.imageViewBackgroundGalaxyID);
+        ImageViewPlanetID = findViewById(R.id.imageViewPlanetID);
 
         // GET USER FILLED
         //
@@ -87,6 +89,10 @@ public class MenuActivity extends AppCompatActivity {
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));
                         TextViewScore.setText("Score : " + user.getPoints());
+
+                        String planetImageName = Constant.definePlanetByUserName(user.getUsername());
+                        ImageViewPlanetID.setImageResource(getApplicationContext().getResources().getIdentifier(planetImageName, "drawable", getApplicationContext().getPackageName()));
+
 
 
                     }

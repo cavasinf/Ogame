@@ -64,4 +64,38 @@
     <!--Building-->
     <drawable name="Recherche_robotique">@drawable/search_recherche_robotique</drawable>
     <drawable name="Recherche_moteurs">@drawable/search_recherche_moteurs</drawable>
+
+    <!--Planet-->
+    <drawable name="planet_normal_1_3">@drawable/normal_1_3</drawable>
+    <drawable name="planet_normal_2_3">@drawable/normal_2_3</drawable>
+    <drawable name="planet_normal_3_3">@drawable/normal_3_3</drawable>
+    <drawable name="planet_normal_4_3">@drawable/normal_4_3</drawable>
+    <drawable name="planet_normal_5_3">@drawable/normal_5_3</drawable>
+    <drawable name="planet_normal_6_3">@drawable/normal_6_3</drawable>
+    <drawable name="planet_normal_7_3">@drawable/normal_7_3</drawable>
+    <drawable name="planet_normal_8_3">@drawable/normal_8_3</drawable>
+    <drawable name="planet_normal_9_3">@drawable/normal_9_3</drawable>
+    <drawable name="planet_normal_10_3">@drawable/normal_10_3</drawable>
+
+    <drawable name="planet_dry_1_3">@drawable/dry_1_3</drawable>
+    <drawable name="planet_dry_2_3">@drawable/dry_2_3</drawable>
+    <drawable name="planet_dry_3_3">@drawable/dry_3_3</drawable>
+    <drawable name="planet_dry_4_3">@drawable/dry_4_3</drawable>
+    <drawable name="planet_dry_5_3">@drawable/dry_5_3</drawable>
+    <drawable name="planet_dry_6_3">@drawable/dry_6_3</drawable>
+    <drawable name="planet_dry_7_3">@drawable/dry_7_3</drawable>
+    <drawable name="planet_dry_8_3">@drawable/dry_8_3</drawable>
+    <drawable name="planet_dry_9_3">@drawable/dry_9_3</drawable>
+    <drawable name="planet_dry_10_3">@drawable/dry_10_3</drawable>
+
+    <drawable name="planet_water_1_3">@drawable/water_1_3</drawable>
+    <drawable name="planet_water_2_3">@drawable/water_2_3</drawable>
+    <drawable name="planet_water_3_3">@drawable/water_3_3</drawable>
+    <drawable name="planet_water_4_3">@drawable/water_4_3</drawable>
+    <drawable name="planet_water_5_3">@drawable/water_5_3</drawable>
+    <drawable name="planet_water_6_3">@drawable/water_6_3</drawable>
+    <drawable name="planet_water_7_3">@drawable/water_7_3</drawable>
+    <drawable name="planet_water_8_3">@drawable/water_8_3</drawable>
+    <drawable name="planet_water_9_3">@drawable/water_9_3</drawable>
+    <drawable name="planet_water_10_3">@drawable/water_10_3</drawable>
 </resources>
