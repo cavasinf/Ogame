@@ -3,6 +3,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class ShipActivity extends AppCompatActivity {
     private TextView TextViewMetal;
     private TextView TextViewDeut;
     private ListView listViewConstruction;
+
+
+    private List<ShipStatus> listShipStatus = new ArrayList<ShipStatus>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +99,7 @@ public class ShipActivity extends AppCompatActivity {
                     // CLICK on item
                     adapter.setOnEventListener(new OnListViewShipChildrenClick() {
                         @Override
-                        public void OnClick(final int id,String amount, View v) {
+                        public void OnClick(final int id, final String amount, View v) {
                             if (v.isEnabled()) {
 
                                 JSONObject jsonParams = new JSONObject();
@@ -110,6 +115,21 @@ public class ShipActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<CreateShipsResponse> call, Response<CreateShipsResponse> response) {
                                         if (response.code() > 199 && response.code() < 301) {
+
+                                            DAOShipStatus daoShipStatus = new DAOShipStatus(getApplicationContext());
+                                            Environment.getExternalStorageDirectory();
+                                            daoShipStatus.open();
+//                                            listShipStatus = daoShipStatus.getAllShipStatus();
+
+                                            DAOShip daoShip = new DAOShip(getApplicationContext());
+                                            daoShip.open();
+                                            Ship shipClicked = daoShip.getShip(String.valueOf(id));
+
+                                            // TODO : time to build ship
+
+                                            int currentTime = (int) (new Date().getTime() / 1000);
+                                            String timeTobuildTotal = "";
+                                            //daoShipStatus.createShipStatus(id, amount, String.valueOf(currentTime),response.body().get);
 
                                             // TODO : current time building + queue ???
                                             refreshShipData(userToken, adapter);

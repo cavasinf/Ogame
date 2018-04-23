@@ -39,6 +39,8 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
 
     private User user;
     private Building buildingSpatioport;
+    private Building buildingUsineDeNanite;
+    private Search searchRobotique;
 
     public ShipAdapter(@NonNull Context context, @NonNull List<Ship> ships, @NonNull User user) {
         super(context, R.layout.row_ship_template, ships);
@@ -57,7 +59,14 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         DAOBuilding daoBuilding = new DAOBuilding(getContext());
         Environment.getExternalStorageDirectory();
         daoBuilding.open();
+        buildingUsineDeNanite = daoBuilding.getBuildingByEffect("speed_building");
         buildingSpatioport = daoBuilding.getBuildingByName("Spatioport");
+
+        DAOSearch daoSearch = new DAOSearch(getContext());
+        daoSearch.open();
+        searchRobotique = daoSearch.getSearchByEffect("speed_building");
+
+
 
         BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
         if (viewHolder == null) {
@@ -88,7 +97,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         viewHolder.textViewRessource2ID.setText(format("%,d", ship.getGasCost()));
         viewHolder.RelativeLayoutConstructButtonID.setEnabled(ship.getSpatioportLevelNeeded() <= buildingSpatioport.getLevel());
         viewHolder.imageViewConstructButtonBackgroundID.setEnabled(ship.getSpatioportLevelNeeded() <= buildingSpatioport.getLevel());
-        viewHolder.editTextProdCountID.setText("");
+//        viewHolder.editTextProdCountID.setText("");
 
         final BuildingViewHolder finalViewHolder = viewHolder;
         viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
@@ -118,5 +127,9 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         public RelativeLayout RelativeLayoutConstructButtonID;
         public ImageView imageViewConstructButtonBackgroundID;
         public EditText editTextProdCountID;
+    }
+
+    private int amountSecondSpeedEffect() {
+        return buildingUsineDeNanite.getLevel() * buildingUsineDeNanite.getAmountOfEffectByLevel() + searchRobotique.getLevel() * searchRobotique.getAmountOfEffectByLevel();
     }
 }
