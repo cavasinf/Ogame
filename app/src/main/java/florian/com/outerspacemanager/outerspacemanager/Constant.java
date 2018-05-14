@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -129,9 +130,15 @@ public class Constant {
         return "";
     }
 
-    public static String getHumanDateFromTimeSecond(int timeInSecond){
+    public static String getHumanDateFromTimeSecond(int timeInSeconds){
         formater.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return formater.format(new Date((timeInSecond)*1000L));
+        return formater.format(new Date((timeInSeconds)*1000L));
+    }
+
+    public static String convertTimeInSecondsToReadableDate(int timeInSeconds){
+        Date dateObj = new Date(Long.valueOf(timeInSeconds)*1000);
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        return df.format(dateObj);
     }
 
 }

@@ -17,27 +17,26 @@ import retrofit2.Retrofit;
 import static java.lang.Math.round;
 import static java.lang.String.format;
 
-public class GalaxyActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity {
 
     private User user;
-    private List<GalaxyUser> GalaxyUserListReceive;
+    private List<Report> ReportListReceive;
 
     private TextView TextViewMetal;
     private TextView TextViewDeut;
-    private ListView listViewGalaxy;
+    private ListView listViewMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_galaxy);
+        setContentView(R.layout.activity_message);
 
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);
-        listViewGalaxy = findViewById(R.id.ListViewGalaxyID);
+        listViewMessage = findViewById(R.id.ListViewMessageID);
 
         // GET USER FILLED
         //
-
         Intent intent = getIntent();
         final User oldUser = (User) intent.getSerializableExtra(Constant.EXTRA_USER);
 
@@ -71,33 +70,31 @@ public class GalaxyActivity extends AppCompatActivity {
 
         }
 
-        // GET GALAXY_USERS
+        // GET REPORT_USER
         //
-
         Retrofit retrofit = Constant.retrofit;
-
         ApiService service = retrofit.create(ApiService.class);
 
-        Call<GetGalaxyResponse> request = service.getGalaxy(userToken);
+        Call<GetReportResponse> request = service.getReports(userToken);
 
-        request.enqueue(new Callback<GetGalaxyResponse>() {
+        request.enqueue(new Callback<GetReportResponse>() {
             @Override
-            public void onResponse(Call<GetGalaxyResponse> call, Response<GetGalaxyResponse> response) {
+            public void onResponse(Call<GetReportResponse> call, Response<GetReportResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
-                    GalaxyUserListReceive = (List<GalaxyUser>)response.body().getUsers();
+                    ReportListReceive = (List<Report>)response.body().getReports();
 
-                    GalaxyAdapter adapter = new GalaxyAdapter(GalaxyActivity.this, GalaxyUserListReceive, user);
+                    ReportAdapter adapter = new ReportAdapter(MessageActivity.this, ReportListReceive, user);
                     // TODO CLICK BUTTON
 //                    adapter.setOnItemClickListener(BuildingActivity.this);
 
-                    listViewGalaxy.setAdapter(adapter);
+                    listViewMessage.setAdapter(adapter);
 
 
                 }
             }
 
             @Override
-            public void onFailure(Call<GetGalaxyResponse> call, Throwable t) {
+            public void onFailure(Call<GetReportResponse> call, Throwable t) {
                 Constant.ToastErrorConnection(getApplicationContext());
             }
 

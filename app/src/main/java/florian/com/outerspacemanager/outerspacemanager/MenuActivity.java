@@ -38,6 +38,7 @@ public class MenuActivity extends AppCompatActivity {
     private ImageView ImageViewBackgroundSpaceShip;
     private ImageView ImageViewBackgroundGalaxy;
     private ImageView ImageViewPlanetID;
+    private ImageView ImageViewMessageID;
 
     public static User user;
 
@@ -62,6 +63,7 @@ public class MenuActivity extends AppCompatActivity {
         ImageViewBackgroundSpaceShip = findViewById(R.id.imageViewBackgroundSpaceShipID);
         ImageViewBackgroundGalaxy = findViewById(R.id.imageViewBackgroundGalaxyID);
         ImageViewPlanetID = findViewById(R.id.imageViewPlanetID);
+        ImageViewMessageID = findViewById(R.id.imageViewMessageID);
 
         // GET USER FILLED
         //
@@ -106,6 +108,29 @@ public class MenuActivity extends AppCompatActivity {
             });
 
         }
+
+
+
+        // CLICK BUTTON MESSAGE
+        //
+
+        ImageViewMessageID.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Pressed
+                    view.setSelected(true);
+                    Intent intent = new Intent(MenuActivity.this, MessageActivity.class);
+                    intent.putExtra(Constant.EXTRA_USER, user);
+                    startActivity(intent);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Released
+                    view.setSelected(false);
+                }
+                return true;
+            }
+        });
+
 
         // CLICK BUTTON BATIMENT
         //

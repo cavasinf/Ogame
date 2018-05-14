@@ -29,6 +29,7 @@
         <activity android:name=".SpaceShipActivity" />
         <activity android:name=".GalaxyActivity"/>
         <activity android:name=".SearchActivity"/>
+        <activity android:name=".MessageActivity"/>
     </application>
 
 </manifest>
