@@ -92,7 +92,7 @@ public class DAOSearch {
         comment.setLevel(cursor.getInt(2));
         comment.setAmountOfEffectByLevel(cursor.getInt(3));
         comment.setAmountOfEffectLevel0(cursor.getInt(4));
-        comment.setIsBuilding(cursor.getInt(5)==1);
+        comment.setIsBuilding(cursor.getInt(5) == 1);
         comment.setEffect(cursor.getString(6));
         comment.setGasCostByLevel(cursor.getInt(7));
         comment.setGasCostLevel0(cursor.getInt(8));
@@ -104,8 +104,18 @@ public class DAOSearch {
         return comment;
     }
 
+    public int getNumberOfRows() {
+        int count = 0;
+        List<Search> listSearch = getAllSearch();
+        for (Search search : listSearch
+                ) {
+            count++;
+        }
+        return count;
+    }
+
     public List<Search> getAllSearch() {
-        List<Search> listSearch= new ArrayList<Search>();
+        List<Search> listSearch = new ArrayList<Search>();
         Cursor cursor = database.query(OgameDB.SEARCH_TABLE_NAME, allColumns, null,
                 null, null, null, null);
         //cursor.moveToFirst();

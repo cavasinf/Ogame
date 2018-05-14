@@ -26,6 +26,10 @@ public class Constant {
 //    public static final String BASE_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
     public static final String BASE_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
+    public static String userToken = "";
+
+    public static User User;
+
     public static final String CST_PLANETS_TYPE[] = {"dry","normal","water"};
 
     public static SimpleDateFormat formater = new SimpleDateFormat("HH'h 'mm'm 'ss's'", Locale.ENGLISH);

@@ -72,8 +72,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_construction_template, parent, false);
         }
 
-
-
         DAOBuilding daoBuilding = new DAOBuilding(getContext());
         Environment.getExternalStorageDirectory();
         daoBuilding.open();

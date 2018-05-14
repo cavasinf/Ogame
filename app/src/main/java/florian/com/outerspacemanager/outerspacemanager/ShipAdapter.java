@@ -63,6 +63,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         buildingSpatioport = daoBuilding.getBuildingByName("Spatioport");
 
         DAOSearch daoSearch = new DAOSearch(getContext());
+        Environment.getExternalStorageDirectory();
         daoSearch.open();
         searchRobotique = daoSearch.getSearchByEffect("speed_building");
 
@@ -84,7 +85,6 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
             convertView.setTag(viewHolder);
         }
 
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
         final Ship ship = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
@@ -92,7 +92,7 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
         shipName = shipName.replaceAll("[^\\p{ASCII}]", "");
         viewHolder.imageViewConstructionID.setImageResource(getContext().getResources().getIdentifier(shipName, "drawable", getContext().getPackageName()));
         viewHolder.textView2ConstructionTitleID.setText(ship.getName());
-        viewHolder.textViewProdTimeID.setText(round(ship.getTimeToBuild()) + "s");
+        viewHolder.textViewProdTimeID.setText(round(getTimeToBuildFinal(ship)) + "s");
         viewHolder.textViewRessource1ID.setText(format("%,d", ship.getMineralCost()));
         viewHolder.textViewRessource2ID.setText(format("%,d", ship.getGasCost()));
         viewHolder.RelativeLayoutConstructButtonID.setEnabled(ship.getSpatioportLevelNeeded() <= buildingSpatioport.getLevel());
@@ -131,5 +131,12 @@ public class ShipAdapter extends ArrayAdapter<Ship> {
 
     private int amountSecondSpeedEffect() {
         return buildingUsineDeNanite.getLevel() * buildingUsineDeNanite.getAmountOfEffectByLevel() + searchRobotique.getLevel() * searchRobotique.getAmountOfEffectByLevel();
+    }
+
+    private int getTimeToBuildFinal(Ship ship) {
+        if ((ship.getTimeToBuild() - amountSecondSpeedEffect()) < 1)
+            return 1;
+        else
+            return ship.getTimeToBuild() - amountSecondSpeedEffect();
     }
 }

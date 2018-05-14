@@ -8,8 +8,8 @@ import android.os.Environment;
 
 public class OgameDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 11;
-    private static final String DATABASE_NAME = "OgameDB.db";
-    //TODO : set DB name dynamic user log
+
+    private static final String DATABASE_NAME = Constant.User.getUsername()+"OgameDB.db";
 
     // ============== USER ===================
 

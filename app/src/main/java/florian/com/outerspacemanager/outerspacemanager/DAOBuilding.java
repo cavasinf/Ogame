@@ -107,6 +107,16 @@ public class DAOBuilding {
         return comment;
     }
 
+    public int getNumberOfRows() {
+        int count = 0;
+        List<Building> listBuilding= getAllBuilding();
+        for (Building building : listBuilding
+             ) {
+            count++;
+        }
+        return count;
+    }
+
     public List<Building> getAllBuilding() {
         List<Building> listBuilding= new ArrayList<Building>();
         Cursor cursor = database.query(OgameDB.BUILDING_TABLE_NAME, allColumns, null,
