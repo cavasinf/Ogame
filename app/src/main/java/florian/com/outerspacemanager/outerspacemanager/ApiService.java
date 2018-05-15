@@ -59,10 +59,9 @@ public interface ApiService {
     Call<GetGalaxyResponse> getGalaxy(@Header("x-access-token") String token);
     // TODO : galaxy 0 - 20 dynamic
 
-    // GALAXY
+    // REPORTS
     //
-    @GET("reports/0/20")
-    Call<GetReportResponse> getReports(@Header("x-access-token") String token);
-    // TODO : report 0 - 20 dynamic
+    @GET("reports/{fromMessageNumber}/20")
+    Call<GetReportResponse> getReports(@Header("x-access-token") String token, @Path("fromMessageNumber") int fromMessageNumber);
 
 }

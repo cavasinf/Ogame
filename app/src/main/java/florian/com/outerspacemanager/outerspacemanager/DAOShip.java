@@ -100,6 +100,16 @@ public class DAOShip {
         return comment;
     }
 
+    public int getNumberOfRows() {
+        int count = 0;
+        List<Ship> listShip = getAllShip();
+        for (Ship ship : listShip
+                ) {
+            count++;
+        }
+        return count;
+    }
+
     public List<Ship> getAllShip() {
         List<Ship> listShip= new ArrayList<Ship>();
         Cursor cursor = database.query(OgameDB.SHIP_TABLE_NAME, allColumns, null,
@@ -115,7 +125,7 @@ public class DAOShip {
 
     public Ship getShip(String id) {
         Cursor cursor = database.query(OgameDB.SHIP_TABLE_NAME, allColumns,
-                OgameDB.KEY_ID + " =\"" + id + "\"",
+                OgameDB.KEY_SHIP_SHIP_ID + " =\"" + id + "\"",
                 null, null, null, null);
         cursor.moveToFirst();
         Ship building = cursorToShip(cursor);

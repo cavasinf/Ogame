@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     final ApiService service = retrofit.create(ApiService.class);
     private List<Building> BuildingListReceive;
     private List<Search> SearchListReceive;
+    private List<Ship> ShipListReceive;
 
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
@@ -166,6 +167,37 @@ public class LoginActivity extends AppCompatActivity {
                                                 }
                                             });
                                         }
+
+                                    // open fleet DB
+                                    final DAOShip daoShip = new DAOShip(getApplicationContext());
+                                    daoShip.open();
+
+                                    if (daoShip.getNumberOfRows() == 0) {
+                                        //There is no ship in the DB
+                                        //Need to populate DB for later
+
+                                        // GET Ships
+                                        //
+                                        Call<GetShipsResponse> request = service.getShips(userToken);
+
+                                        request.enqueue(new Callback<GetShipsResponse>() {
+                                            @Override
+                                            public void onResponse(Call<GetShipsResponse> call, Response<GetShipsResponse> response) {
+                                                if (response.code() > 199 && response.code() < 301) {
+                                                    ShipListReceive = (List<Ship>) response.body().getShips();
+                                                    for (Ship ship : ShipListReceive) {
+                                                        // add ship to DB
+                                                        daoShip.createShip(ship.getCapacity(),ship.getGasCost(),ship.getLife(),ship.getMaxAttack(),ship.getMinAttack(),ship.getMineralCost(),ship.getName(),ship.getShield(),ship.getShipId(),ship.getSpatioportLevelNeeded(),ship.getSpeed(),ship.getTimeToBuild());
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetShipsResponse> call, Throwable t) {
+
+                                            }
+                                        });
+                                    }
 
                                         // ==================================
 

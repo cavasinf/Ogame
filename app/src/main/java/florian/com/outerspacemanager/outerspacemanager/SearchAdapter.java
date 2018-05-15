@@ -99,6 +99,8 @@ public class SearchAdapter extends ArrayAdapter<Search> {
         if (finalViewHolder.timer != null) {
             finalViewHolder.timer.cancel();
         }
+        // TODO : Error timer ??
+
         if (search.isBuilding()) {
             for (final SearchStatus searchingStatus : listSearchStatus) {
                 if (Objects.equals(searchingStatus.getSearchId(), search.getSearchId().toString())) {

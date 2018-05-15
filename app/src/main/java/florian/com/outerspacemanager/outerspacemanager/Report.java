@@ -9,7 +9,7 @@ import java.util.List;
 class Report {
 
     private List<AttackerFleet> attackerFleet = null;
-    private FleetAfterBattle fleetAfterBattle;
+    private FleetAfterBattle attackerFleetAfterBattle;
     private Integer date;
     private List<Ship> defenderFleet = null;
     private FleetAfterBattle defenderFleetAfterBattle;
@@ -27,12 +27,12 @@ class Report {
         this.attackerFleet = attackerFleet;
     }
 
-    public FleetAfterBattle getFleetAfterBattle() {
-        return fleetAfterBattle;
+    public FleetAfterBattle getAttackerFleetAfterBattle() {
+        return attackerFleetAfterBattle;
     }
 
-    public void setFleetAfterBattle(FleetAfterBattle fleetAfterBattle) {
-        this.fleetAfterBattle = fleetAfterBattle;
+    public void setAttackerFleetAfterBattle(FleetAfterBattle attackerFleetAfterBattle) {
+        this.attackerFleetAfterBattle = attackerFleetAfterBattle;
     }
 
     public Integer getDate() {

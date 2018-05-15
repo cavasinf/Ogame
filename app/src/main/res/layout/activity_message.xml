@@ -165,7 +165,9 @@
                 android:layout_weight="1"
                 android:background="@color/background_light"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="0"
+                android:textAlignment="center" />
 
             <ImageView
                 android:id="@+id/imageViewActionRightID"
@@ -184,6 +186,14 @@
                 android:background="@color/background_light"
                 android:text="Chercher" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewMessageDisplayedInfoID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorTitleOrange"
+            tools:text="Messages de 00 a 00" />
 
         <ListView
             android:id="@+id/ListViewMessageID"

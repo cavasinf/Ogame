@@ -124,7 +124,6 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
                 if (Objects.equals(buildingStatus.getBuildingId(), building.getBuildingId().toString())) {
                     if (isTimerLaunched != null) {
                         if (!isTimerLaunched.containsKey(building.getBuildingId())) {
-
                             startTimer(building, buildingStatus, finalViewHolder);
                         }
                     } else {

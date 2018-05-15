@@ -75,7 +75,6 @@ public class GalaxyActivity extends AppCompatActivity {
         //
 
         Retrofit retrofit = Constant.retrofit;
-
         ApiService service = retrofit.create(ApiService.class);
 
         Call<GetGalaxyResponse> request = service.getGalaxy(userToken);
@@ -85,14 +84,8 @@ public class GalaxyActivity extends AppCompatActivity {
             public void onResponse(Call<GetGalaxyResponse> call, Response<GetGalaxyResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     GalaxyUserListReceive = (List<GalaxyUser>)response.body().getUsers();
-
                     GalaxyAdapter adapter = new GalaxyAdapter(GalaxyActivity.this, GalaxyUserListReceive, user);
-                    // TODO CLICK BUTTON
-//                    adapter.setOnItemClickListener(BuildingActivity.this);
-
                     listViewGalaxy.setAdapter(adapter);
-
-
                 }
             }
 
