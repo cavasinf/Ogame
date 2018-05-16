@@ -154,7 +154,7 @@
             <ImageView
                 android:id="@+id/imageViewActionLeftID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/action_left" />
 
@@ -165,12 +165,14 @@
                 android:layout_weight="1"
                 android:background="@color/background_light"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="0"
+                android:textAlignment="center" />
 
             <ImageView
                 android:id="@+id/imageViewActionRightID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/action_right" />
 
@@ -184,6 +186,14 @@
                 android:background="@color/background_light"
                 android:text="Chercher" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewPlayerDisplayedInfoID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorTitleOrange"
+            tools:text="Joueurs de 00 a 00" />
 
         <ListView
             android:id="@+id/ListViewGalaxyID"

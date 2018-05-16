@@ -112,7 +112,7 @@ public class MessageActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (Integer.parseInt(editTextBeginNumberID.getText().toString()) >= 0)
+                        if (Integer.parseInt(editTextBeginNumberID.getText().toString()) > 0)
                             editTextBeginNumberID.setText(String.valueOf(Integer.parseInt(editTextBeginNumberID.getText().toString()) - 1));
                     }
                 }
@@ -146,12 +146,8 @@ public class MessageActivity extends AppCompatActivity {
                         }
                     });
 
-                    int maxDisplayed = 0;
-                    if (fromMessageNumber > 20 && response.body().getSize() > 0)
-                        maxDisplayed = response.body().getSize() + fromMessageNumber;
-                    else
-                        maxDisplayed = response.body().getSize();
-                    textViewMessageDisplayedInfoID.setText("Messages de "+fromMessageNumber+" a "+maxDisplayed);
+                    int maxDisplayed = response.body().getSize() + fromMessageNumber;
+                    textViewMessageDisplayedInfoID.setText("Messages de "+fromMessageNumber+" a "+ maxDisplayed);
 
                     listViewMessage.setAdapter(adapter);
                 }

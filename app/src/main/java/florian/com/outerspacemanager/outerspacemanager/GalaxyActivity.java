@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static florian.com.outerspacemanager.outerspacemanager.Constant.userToken;
 import static java.lang.Math.round;
 import static java.lang.String.format;
 
@@ -21,10 +26,16 @@ public class GalaxyActivity extends AppCompatActivity {
 
     private User user;
     private List<GalaxyUser> GalaxyUserListReceive;
+    private int fromUserNumber;
 
     private TextView TextViewMetal;
     private TextView TextViewDeut;
     private ListView listViewGalaxy;
+    private EditText editTextBeginNumberID;
+    private Button buttonRechercherID;
+    private ImageView imageViewActionLeftID;
+    private ImageView imageViewActionRightID;
+    private TextView textViewPlayerDisplayedInfoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +45,13 @@ public class GalaxyActivity extends AppCompatActivity {
         TextViewMetal = findViewById(R.id.textViewMetalID);
         TextViewDeut = findViewById(R.id.textViewDeutID);
         listViewGalaxy = findViewById(R.id.ListViewGalaxyID);
+        editTextBeginNumberID = findViewById(R.id.editTextBeginNumberID);
+        buttonRechercherID = findViewById(R.id.buttonRechercherID);
+        imageViewActionLeftID = findViewById(R.id.imageViewActionLeftID);
+        imageViewActionRightID = findViewById(R.id.imageViewActionRightID);
+        textViewPlayerDisplayedInfoID = findViewById(R.id.textViewPlayerDisplayedInfoID);
+
+        fromUserNumber = Integer.parseInt(editTextBeginNumberID.getText().toString());
 
         // GET USER FILLED
         //
@@ -75,16 +93,58 @@ public class GalaxyActivity extends AppCompatActivity {
         //
 
         Retrofit retrofit = Constant.retrofit;
-        ApiService service = retrofit.create(ApiService.class);
+        final ApiService service = retrofit.create(ApiService.class);
 
-        Call<GetGalaxyResponse> request = service.getGalaxy(userToken);
+        setListViewData(service);
 
+        buttonRechercherID.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (editTextBeginNumberID.getText().toString().equals(""))
+                            editTextBeginNumberID.setText("0");
+                        fromUserNumber = Integer.parseInt(editTextBeginNumberID.getText().toString());
+                        setListViewData(service);
+                    }
+                }
+        );
+
+        imageViewActionLeftID.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (Integer.parseInt(editTextBeginNumberID.getText().toString()) > 0)
+                            editTextBeginNumberID.setText(String.valueOf(Integer.parseInt(editTextBeginNumberID.getText().toString()) - 1));
+                    }
+                }
+        );
+
+        imageViewActionRightID.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        editTextBeginNumberID.setText(String.valueOf(Integer.parseInt(editTextBeginNumberID.getText().toString()) + 1));
+                    }
+                }
+        );
+
+
+
+
+    }
+
+    private void setListViewData(ApiService service) {
+        Call<GetGalaxyResponse> request = service.getGalaxy(userToken, fromUserNumber);
         request.enqueue(new Callback<GetGalaxyResponse>() {
             @Override
             public void onResponse(Call<GetGalaxyResponse> call, Response<GetGalaxyResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     GalaxyUserListReceive = (List<GalaxyUser>)response.body().getUsers();
                     GalaxyAdapter adapter = new GalaxyAdapter(GalaxyActivity.this, GalaxyUserListReceive, user);
+
+                    int maxDisplayed = 20 + fromUserNumber;
+                    textViewPlayerDisplayedInfoID.setText("Joueurs de "+fromUserNumber+" a "+ maxDisplayed);
+
                     listViewGalaxy.setAdapter(adapter);
                 }
             }

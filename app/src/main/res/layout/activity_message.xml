@@ -154,7 +154,7 @@
             <ImageView
                 android:id="@+id/imageViewActionLeftID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/action_left" />
 
@@ -172,7 +172,7 @@
             <ImageView
                 android:id="@+id/imageViewActionRightID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/action_right" />
 
