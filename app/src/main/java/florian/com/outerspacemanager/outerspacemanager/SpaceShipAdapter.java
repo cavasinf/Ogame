@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +52,9 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_fleet_template, parent, false);
         }
 
-        BuildingViewHolder viewHolder = (BuildingViewHolder) convertView.getTag();
+        ShipViewHolder viewHolder = (ShipViewHolder) convertView.getTag();
         if (viewHolder == null) {
-            viewHolder = new BuildingViewHolder();
+            viewHolder = new ShipViewHolder();
             viewHolder.imageViewFleetID = (ImageView) convertView.findViewById(R.id.imageViewFleetID);
             viewHolder.imageViewOverviewID = (ImageView) convertView.findViewById(R.id.imageViewOverviewID);
             viewHolder.textViewNumberFleetID = (TextView) convertView.findViewById(R.id.textViewNumberFleetID);
@@ -73,7 +75,7 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
         viewHolder.imageViewFleetID.setImageResource(getContext().getResources().getIdentifier(shipName, "drawable", getContext().getPackageName()));
         viewHolder.textViewNumberFleetID.setText(Math.round(ship.getAmount())+"");
 
-        final BuildingViewHolder finalViewHolder = viewHolder;
+        final ShipViewHolder finalViewHolder = viewHolder;
         viewHolder.imageViewSetMaxID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -88,10 +90,30 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
             }
         });
 
+        final ShipViewHolder finalViewHolder1 = viewHolder;
+        viewHolder.editTextCountFleetID.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //TODO : for each ship selected
+                SpaceShipActivity.numberOfShipForAttack.put(ship.getShipId(),Integer.parseInt(finalViewHolder1.editTextCountFleetID.getText().toString()));
+            }
+        });
+
         return convertView;
     }
 
-    class BuildingViewHolder {
+    class ShipViewHolder {
         public ImageView imageViewFleetID;
         public ImageView imageViewOverviewID;
         public TextView textViewNumberFleetID;

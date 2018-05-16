@@ -148,6 +148,59 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/LinearLayoutPlayerAttackInfoID"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="25dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="0dp"
+            android:paddingStart="35dp">
+
+            <TextView
+                android:id="@+id/textViewAttackLabelID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Joueur :"
+                android:textColor="@color/colorTitleOrange" />
+
+            <TextView
+                android:id="@+id/textViewPlayerToAttackID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/colorTitleOrange"
+                android:textStyle="bold|italic"
+                tools:text="Username" />
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayoutAttackButtonID"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <ImageView
+                    android:id="@+id/imageViewAttackButtonBackgroundID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/button_cancel" />
+
+                <TextView
+                    android:id="@+id/textViewAttackButtonTextID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="ATTAQUER"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <GridView
             android:id="@+id/GridViewFleetID"
             android:layout_width="match_parent"

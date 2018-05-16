@@ -3,6 +3,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -141,6 +148,17 @@ public class GalaxyActivity extends AppCompatActivity {
                 if (response.code() > 199 && response.code() < 301) {
                     GalaxyUserListReceive = (List<GalaxyUser>)response.body().getUsers();
                     GalaxyAdapter adapter = new GalaxyAdapter(GalaxyActivity.this, GalaxyUserListReceive, user);
+
+                    // CLICK on attack button
+                    adapter.setOnEventListener(new OnListViewUserChildrenClick() {
+                        @Override
+                        public void OnClick(final String playerToAttack, View v) {
+                            Intent intent = new Intent(GalaxyActivity.this, SpaceShipActivity.class);
+                            intent.putExtra(Constant.EXTRA_USER, user);
+                            intent.putExtra(Constant.EXTRA_PLAYER_TO_ATTACK, playerToAttack);
+                            startActivity(intent);
+                        }
+                    });
 
                     int maxDisplayed = 20 + fromUserNumber;
                     textViewPlayerDisplayedInfoID.setText("Joueurs de "+fromUserNumber+" a "+ maxDisplayed);

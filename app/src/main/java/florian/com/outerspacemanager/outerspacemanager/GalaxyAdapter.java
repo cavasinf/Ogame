@@ -2,6 +2,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -25,10 +26,12 @@ import static java.lang.String.format;
 
 public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
 
-    private AdapterView.OnItemClickListener onItemClickListener;
+    private OnListViewUserChildrenClick OnListViewUserChildrenClick;
+    private Handler handler = new Handler();
+    private int delay = 100; //milliseconds
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnEventListener(OnListViewUserChildrenClick listener) {
+        OnListViewUserChildrenClick = listener;
     }
 
     private User user;
@@ -53,26 +56,31 @@ public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
             viewHolder.imageViewPlanetID = (ImageView) convertView.findViewById(R.id.imageViewPlanetID);
             viewHolder.textViewUsernameID = (TextView) convertView.findViewById(R.id.textViewUsernameID);
             viewHolder.textViewScoreID = (TextView) convertView.findViewById(R.id.textViewScoreID);
+            viewHolder.RelativeLayoutAttackButtonID = (RelativeLayout) convertView.findViewById(R.id.RelativeLayoutAttackButtonID);
 
             convertView.setTag(viewHolder);
         }
 
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
-        GalaxyUser galaxyUser = getItem(position);
+        final GalaxyUser galaxyUser = getItem(position);
 
-        //il ne reste plus qu'à remplir notre vue
         String planetImageName = Constant.definePlanetByUserName(galaxyUser.getUsername());
         viewHolder.imageViewPlanetID.setImageResource(getContext().getResources().getIdentifier(planetImageName, "drawable", getContext().getPackageName()));
         viewHolder.textViewUsernameID.setText(galaxyUser.getUsername());
         viewHolder.textViewScoreID.setText(format("%,d", round(galaxyUser.getPoints())));
-        // TODO CLICK button
-//        viewHolder.RelativeLayoutConstructButtonID.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.onClick(parent);
-//            }
-//        });
+
+        viewHolder.RelativeLayoutAttackButtonID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                OnListViewUserChildrenClick.OnClick(galaxyUser.getUsername(), v);
+                v.setSelected(true);
+
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        v.setSelected(false);
+                    }
+                }, delay);
+            }
+        });
 
         return convertView;
     }
@@ -81,5 +89,6 @@ public class GalaxyAdapter extends ArrayAdapter<GalaxyUser> {
         public ImageView imageViewPlanetID;
         public TextView textViewUsernameID;
         public TextView textViewScoreID;
+        public RelativeLayout RelativeLayoutAttackButtonID;
     }
 }
