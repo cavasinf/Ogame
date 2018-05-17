@@ -9,20 +9,20 @@ import java.util.UUID;
 
 public class ShipForAttack {
 
-    private Integer id;
+    private Integer shipId;
     private Integer amount;
 
-    public ShipForAttack(Integer id, Integer amount) {
-        this.id = id;
+    public ShipForAttack(Integer shipId, Integer amount) {
+        this.shipId = shipId;
         this.amount = amount;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getShipId() {
+        return shipId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setShipId(Integer shipId) {
+        this.shipId = shipId;
     }
 
     public Integer getAmount() {

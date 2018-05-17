@@ -105,7 +105,6 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //TODO : for each ship selected
                 SpaceShipActivity.numberOfShipForAttack.put(ship.getShipId(),Integer.parseInt(finalViewHolder1.editTextCountFleetID.getText().toString()));
             }
         });

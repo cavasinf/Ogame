@@ -38,7 +38,7 @@ public interface ApiService {
     Call<GetSpaceShipsResponse> getSpaceShip(@Header("x-access-token") String token);
 
     //for attack
-    @GET("fleet/attack/{playerToAttack}")
+    @POST("fleet/attack/{playerToAttack}")
     Call<PostAttackPlayerResponse> attackPlayer(@Header("x-access-token") String token, @Path("playerToAttack") String playerToAttack, @Body RequestBody body);
 
     // SHIP

@@ -13,6 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -111,8 +114,8 @@ public class SpaceShipActivity extends AppCompatActivity {
                         view.setSelected(true);
                         Boolean numberOfShipGTZero = false;
 
-                        ShipForAttack shipForAttack = null;
-                        ArrayList<ShipForAttack> listShipForAttack = new ArrayList<ShipForAttack>();
+//                        ShipForAttack shipForAttack = null;
+//                        ArrayList<String> jsonListShipForAttack = new ArrayList<String>();
 
                         for (ArrayMap.Entry<Integer, Integer> shipEntry : numberOfShipForAttack.entrySet()) {
                             System.out.println("Key : " + shipEntry.getKey() + " Value : " + shipEntry.getValue());
@@ -120,18 +123,29 @@ public class SpaceShipActivity extends AppCompatActivity {
                                 numberOfShipGTZero = true;
                         }
                         if (numberOfShipGTZero) {
+
+                            JSONArray jsonParamsArray = new JSONArray();
+
                             for (ArrayMap.Entry<Integer, Integer> shipEntry : numberOfShipForAttack.entrySet()) {
                                 System.out.println("Key : " + shipEntry.getKey() + " Value : " + shipEntry.getValue());
-                                if (shipEntry.getValue() > 0)
-                                    shipForAttack = new ShipForAttack(shipEntry.getKey(),shipEntry.getValue());
-                                    listShipForAttack.add(shipForAttack);
+                                if (shipEntry.getValue() > 0) {
+                                    JSONObject jsonShip = new JSONObject();
+                                    try {
+                                        jsonShip.put("shipId",shipEntry.getKey());
+                                        jsonShip.put("amount",shipEntry.getValue());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    jsonParamsArray.put(jsonShip);
+//                                    shipForAttack = new ShipForAttack(shipEntry.getKey(), shipEntry.getValue());
+//                                    String jsonShipForAttack = gson.toJson(shipForAttack);
+//                                    jsonListShipForAttack.add(jsonShipForAttack);
+                                }
                             }
 
                             final JSONObject jsonParams = new JSONObject();
-
-                            //TODO : jsonify ship before send body
                             try {
-                                jsonParams.put("ships", listShipForAttack);
+                                jsonParams.put("ships", jsonParamsArray);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -151,6 +165,7 @@ public class SpaceShipActivity extends AppCompatActivity {
 
                                         Toast toast = Toast.makeText(getApplicationContext(), "Attaque lancée", Toast.LENGTH_LONG);
                                         toast.show();
+                                        finish();
                                     }
                                 }
 
