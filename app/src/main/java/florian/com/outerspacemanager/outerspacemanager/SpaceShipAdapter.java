@@ -105,7 +105,14 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                SpaceShipActivity.numberOfShipForAttack.put(ship.getShipId(),Integer.parseInt(finalViewHolder1.editTextCountFleetID.getText().toString()));
+                if (finalViewHolder1.editTextCountFleetID.getText().toString().equals(""))
+                    finalViewHolder1.editTextCountFleetID.setText("0");
+                Integer numberSet = Integer.parseInt(finalViewHolder1.editTextCountFleetID.getText().toString());
+                SpaceShipActivity.numberOfShipForAttack.put(ship.getShipId(),numberSet);
+                if (numberSet > 0)
+                    finalViewHolder1.imageViewOverviewID.setImageResource(getContext().getResources().getIdentifier("ship_overlay_info_selected", "drawable", getContext().getPackageName()));
+                else
+                    finalViewHolder1.imageViewOverviewID.setImageResource(getContext().getResources().getIdentifier("ship_overlay_info", "drawable", getContext().getPackageName()));
             }
         });
 

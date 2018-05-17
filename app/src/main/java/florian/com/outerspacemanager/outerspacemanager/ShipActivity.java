@@ -125,8 +125,6 @@ public class ShipActivity extends AppCompatActivity {
                                             daoShip.open();
                                             Ship shipClicked = daoShip.getShip(String.valueOf(id));
 
-                                            // TODO : time to build ship
-
                                             int currentTime = (int) (new Date().getTime() / 1000);
                                             String timeTobuildTotal = "";
                                             //daoShipStatus.createShipStatus(id, amount, String.valueOf(currentTime),response.body().get);

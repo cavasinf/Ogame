@@ -9,6 +9,7 @@ import android.util.ArrayMap;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class SpaceShipActivity extends AppCompatActivity {
     private TextView TextViewDeut;
     private GridView GridViewFleet;
 
+    private LinearLayout LinearLayoutPlayerAttackInfoID;
     private TextView textViewPlayerToAttackID;
     private RelativeLayout RelativeLayoutAttackButtonID;
 
@@ -57,6 +59,7 @@ public class SpaceShipActivity extends AppCompatActivity {
         TextViewDeut = findViewById(R.id.textViewDeutID);
         GridViewFleet = findViewById(R.id.GridViewFleetID);
 
+        LinearLayoutPlayerAttackInfoID = findViewById(R.id.LinearLayoutPlayerAttackInfoID);
         textViewPlayerToAttackID = findViewById(R.id.textViewPlayerToAttackID);
         RelativeLayoutAttackButtonID = findViewById(R.id.RelativeLayoutAttackButtonID);
 
@@ -104,6 +107,7 @@ public class SpaceShipActivity extends AppCompatActivity {
         //
 
         if (!playerToAttack.equals("")){
+            LinearLayoutPlayerAttackInfoID.setVisibility(View.VISIBLE);
             textViewPlayerToAttackID.setText(playerToAttack);
 
             RelativeLayoutAttackButtonID.setOnTouchListener(new View.OnTouchListener() {

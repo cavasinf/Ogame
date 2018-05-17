@@ -90,7 +90,7 @@ public class MenuActivity extends AppCompatActivity {
                         TextViewPseudonyme.setText(user.getUsername());
                         TextViewDeut.setText(format("%,d", round(user.getGas())));
                         TextViewMetal.setText(format("%,d", round(user.getMinerals())));
-                        TextViewScore.setText("Score : " + user.getPoints());
+                        TextViewScore.setText("Score : " + format("%,d",round(user.getPoints())));
 
                         String planetImageName = Constant.definePlanetByUserName(user.getUsername());
                         ImageViewPlanetID.setImageResource(getApplicationContext().getResources().getIdentifier(planetImageName, "drawable", getApplicationContext().getPackageName()));
@@ -229,6 +229,8 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        // TODO : Fleet Attack Status button
 
         ImageViewBackgroundSpaceShip.setOnTouchListener(new View.OnTouchListener() {
             @Override

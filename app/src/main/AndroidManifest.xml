@@ -30,6 +30,7 @@
         <activity android:name=".GalaxyActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".MessageActivity"/>
+        <activity android:name=".ReportActivity"/>
     </application>
 
 </manifest>

@@ -142,7 +142,7 @@ public class MessageActivity extends AppCompatActivity {
                     adapter.setOnEventListener(new OnListViewChildrenClick() {
                         @Override
                         public void OnClick(final int id, View v) {
-                            //TODO : activity to detail report
+                            Constant.ToastErrorConnection(getApplicationContext());
                         }
                     });
 

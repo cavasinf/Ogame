@@ -299,7 +299,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp"
-                tools:text="textViewPseudonymeID" />
+                tools:text="Pseudonyme" />
 
             <TextView
                 android:id="@+id/textViewTiretID"
@@ -321,7 +321,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp"
-                tools:text="textViewScoreID2" />
+                tools:text="999 999 999" />
         </LinearLayout>
 
     </LinearLayout>

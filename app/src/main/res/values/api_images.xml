@@ -98,4 +98,9 @@
     <drawable name="planet_water_8_3">@drawable/water_8_3</drawable>
     <drawable name="planet_water_9_3">@drawable/water_9_3</drawable>
     <drawable name="planet_water_10_3">@drawable/water_10_3</drawable>
+
+    <!--Actions-->
+
+    <drawable name="ship_overlay_info_selected">@drawable/overlay_info_selected</drawable>
+    <drawable name="ship_overlay_info">@drawable/overlay_info</drawable>
 </resources>
