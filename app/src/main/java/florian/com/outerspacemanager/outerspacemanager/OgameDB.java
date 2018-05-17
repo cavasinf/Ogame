@@ -7,7 +7,7 @@ import android.os.Environment;
 
 
 public class OgameDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
 
     private static final String DATABASE_NAME = Constant.User.getUsername()+"OgameDB.db";
 
@@ -150,8 +150,19 @@ public class OgameDB extends SQLiteOpenHelper {
     public static final String KEY_SHIP_STATE_DATE_CONSTRUCTION_LAUNCH = "dateConstructionLaunch";
     public static final String KEY_SHIP_STATE_DATE_CONSTRUCTION_END = "dateConstructionEnd";
 
-    private static final String SHIP_STATE_TABLE_CREATE = "CREATE TABLE " + SHIP_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_SHIP_STATE_SHIP_ID + " TEXT, " +KEY_SHIP_STATE_NUMBER + " TEXT, " + " TEXT, " +KEY_SHIP_STATE_DATE_CONSTRUCTION_LAUNCH + " TEXT, " +
+    private static final String SHIP_STATE_TABLE_CREATE = "CREATE TABLE " + SHIP_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_SHIP_STATE_SHIP_ID + " TEXT, " +KEY_SHIP_STATE_NUMBER + " TEXT, " +KEY_SHIP_STATE_DATE_CONSTRUCTION_LAUNCH + " TEXT, " +
             KEY_SHIP_STATE_DATE_CONSTRUCTION_END + " TEXT);";
+
+
+    // ============== FLEET ATTACK STATE ===================
+
+    public static final String ATTACK_STATE_TABLE_NAME = "AttackState";
+    public static final String KEY_ATTACK_STATE_PLAYER_TO_ATTACK = "playerToAttack";
+    public static final String KEY_ATTACK_STATE_STATE_DATE_RETURN = "dateAttackReturn";
+    public static final String KEY_ATTACK_STATE_FLEET = "fleet";
+
+    private static final String ATTACK_STATE_TABLE_CREATE = "CREATE TABLE " + ATTACK_STATE_TABLE_NAME + " (" + KEY_ID + " TEXT, " + KEY_ATTACK_STATE_PLAYER_TO_ATTACK + " TEXT, " +KEY_ATTACK_STATE_STATE_DATE_RETURN + " TEXT, " +  KEY_ATTACK_STATE_FLEET + " TEXT);";
+
 
 
 
@@ -169,6 +180,7 @@ public class OgameDB extends SQLiteOpenHelper {
         db.execSQL(SEARCH_TABLE_CREATE);
         db.execSQL(SHIP_TABLE_CREATE);
         db.execSQL(SHIP_STATE_TABLE_CREATE);
+        db.execSQL(ATTACK_STATE_TABLE_CREATE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -181,6 +193,7 @@ public class OgameDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SEARCH_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SHIP_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SHIP_STATE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ATTACK_STATE_TABLE_NAME);
         onCreate(db);
     }
 }

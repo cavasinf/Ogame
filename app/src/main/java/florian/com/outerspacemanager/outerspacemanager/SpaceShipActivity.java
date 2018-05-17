@@ -2,6 +2,7 @@ package florian.com.outerspacemanager.outerspacemanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -108,6 +109,58 @@ public class SpaceShipActivity extends AppCompatActivity {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         // Pressed
                         view.setSelected(true);
+                        Boolean numberOfShipGTZero = false;
+
+                        ShipForAttack shipForAttack = null;
+                        ArrayList<ShipForAttack> listShipForAttack = new ArrayList<ShipForAttack>();
+
+                        for (ArrayMap.Entry<Integer, Integer> shipEntry : numberOfShipForAttack.entrySet()) {
+                            System.out.println("Key : " + shipEntry.getKey() + " Value : " + shipEntry.getValue());
+                            if (shipEntry.getValue() > 0)
+                                numberOfShipGTZero = true;
+                        }
+                        if (numberOfShipGTZero) {
+                            for (ArrayMap.Entry<Integer, Integer> shipEntry : numberOfShipForAttack.entrySet()) {
+                                System.out.println("Key : " + shipEntry.getKey() + " Value : " + shipEntry.getValue());
+                                if (shipEntry.getValue() > 0)
+                                    shipForAttack = new ShipForAttack(shipEntry.getKey(),shipEntry.getValue());
+                                    listShipForAttack.add(shipForAttack);
+                            }
+
+                            final JSONObject jsonParams = new JSONObject();
+
+                            //TODO : jsonify ship before send body
+                            try {
+                                jsonParams.put("ships", listShipForAttack);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonParams.toString());
+                            Call<PostAttackPlayerResponse> requestAttackPlayer = service.attackPlayer(userToken, playerToAttack, body);
+
+                            requestAttackPlayer.enqueue(new Callback<PostAttackPlayerResponse>() {
+                                @Override
+                                public void onResponse(Call<PostAttackPlayerResponse> call, Response<PostAttackPlayerResponse> response) {
+                                    if (response.code() > 199 && response.code() < 301) {
+
+                                        DAOAttackFleetStatus daoAttackFleetStatus = new DAOAttackFleetStatus(getApplicationContext());
+                                        Environment.getExternalStorageDirectory();
+                                        daoAttackFleetStatus.open();
+
+                                        daoAttackFleetStatus.createFleetAttackStatus(playerToAttack,response.body().getAttackTime().toString(),jsonParams.toString());
+
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Attaque lancée", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<PostAttackPlayerResponse> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
 
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         // Released

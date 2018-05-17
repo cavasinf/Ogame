@@ -37,6 +37,10 @@ public interface ApiService {
     @GET("fleet/list")
     Call<GetSpaceShipsResponse> getSpaceShip(@Header("x-access-token") String token);
 
+    //for attack
+    @GET("fleet/attack/{playerToAttack}")
+    Call<PostAttackPlayerResponse> attackPlayer(@Header("x-access-token") String token, @Path("playerToAttack") String playerToAttack, @Body RequestBody body);
+
     // SHIP
     //
     @GET("ships")
@@ -62,5 +66,6 @@ public interface ApiService {
     //
     @GET("reports/{fromMessageNumber}/20")
     Call<GetReportResponse> getReports(@Header("x-access-token") String token, @Path("fromMessageNumber") int fromMessageNumber);
+
 
 }
