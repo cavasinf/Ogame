@@ -68,9 +68,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="999 999 999"
                     android:textAlignment="center"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    tools:text="999 999 999" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,9 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="999 999 999"
                     android:textAlignment="center"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    tools:text="999 999 999" />
             </LinearLayout>
 
         </LinearLayout>

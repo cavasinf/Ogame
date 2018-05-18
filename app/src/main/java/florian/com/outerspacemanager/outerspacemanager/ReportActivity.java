@@ -64,7 +64,7 @@ public class ReportActivity extends AppCompatActivity {
         // GET Report
         //
 
-        Call<GetReportResponse> request = service.getReport(userToken, reportNumber+1);
+        Call<GetReportResponse> request = service.getReport(userToken, reportNumber);
         request.enqueue(new Callback<GetReportResponse>() {
             @Override
             public void onResponse(Call<GetReportResponse> call, Response<GetReportResponse> response) {
