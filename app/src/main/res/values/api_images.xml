@@ -102,5 +102,6 @@
     <!--Actions-->
 
     <drawable name="ship_overlay_info_selected">@drawable/overlay_info_selected</drawable>
+    <drawable name="ship_overlay_info_blocked">@drawable/overlay_info_blocked</drawable>
     <drawable name="ship_overlay_info">@drawable/overlay_info</drawable>
 </resources>

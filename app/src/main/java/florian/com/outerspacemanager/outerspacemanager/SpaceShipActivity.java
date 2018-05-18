@@ -200,7 +200,7 @@ public class SpaceShipActivity extends AppCompatActivity {
                 if (response.code() > 199 && response.code() < 301) {
                     ShipListReceive = (List<Ship>)response.body().getShips();
 
-                    final SpaceShipAdapter adapter = new SpaceShipAdapter(SpaceShipActivity.this, ShipListReceive, user);
+                    final SpaceShipAdapter adapter = new SpaceShipAdapter(SpaceShipActivity.this, ShipListReceive, user, playerToAttack);
 
                     // CLICK set max ship
                     adapter.setOnEventListener(new OnGridViewSpaceShipChildrenMaxClick() {

@@ -67,5 +67,8 @@ public interface ApiService {
     @GET("reports/{fromMessageNumber}/20")
     Call<GetReportResponse> getReports(@Header("x-access-token") String token, @Path("fromMessageNumber") int fromMessageNumber);
 
+    @GET("reports/{reportNumber}/1")
+    Call<GetReportResponse> getReport(@Header("x-access-token") String token, @Path("reportNumber") int reportNumber);
+
 
 }

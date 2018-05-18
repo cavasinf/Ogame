@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,15 +33,18 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
     private Handler handler = new Handler();
     private int delay = 100; //milliseconds
 
+    private String playerToAttack;
+
     public void setOnEventListener(OnGridViewSpaceShipChildrenMaxClick listener) {
         mOnGridViewSpaceShipChildrenMaxClick = listener;
     }
 
     private User user;
 
-    public SpaceShipAdapter(@NonNull Context context, @NonNull List<Ship> ships, @NonNull User user) {
+    public SpaceShipAdapter(@NonNull Context context, @NonNull List<Ship> ships, @NonNull User user,String playerToAttack) {
         super(context, R.layout.grid_fleet_template, ships);
         this.user = user;
+        this.playerToAttack = playerToAttack;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -61,6 +65,7 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
             viewHolder.editTextCountFleetID = (EditText) convertView.findViewById(R.id.editTextCountFleetID);
             viewHolder.imageViewSetMaxID = (ImageView) convertView.findViewById(R.id.imageViewSetMaxID);
             viewHolder.imageViewSetZeroID = (ImageView) convertView.findViewById(R.id.imageViewSetZeroID);
+            viewHolder.LinearLayoutSetNumberID = (LinearLayout) convertView.findViewById(R.id.LinearLayoutSetNumberID);
 
             convertView.setTag(viewHolder);
         }
@@ -74,6 +79,14 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
         shipName += "_enabled";
         viewHolder.imageViewFleetID.setImageResource(getContext().getResources().getIdentifier(shipName, "drawable", getContext().getPackageName()));
         viewHolder.textViewNumberFleetID.setText(Math.round(ship.getAmount())+"");
+        if (ship.getAmount() == 0 )
+        {
+            viewHolder.imageViewOverviewID.setImageResource(getContext().getResources().getIdentifier("ship_overlay_info_blocked", "drawable", getContext().getPackageName()));
+            viewHolder.LinearLayoutSetNumberID.setVisibility(View.GONE);
+        }
+
+        if (playerToAttack == "")
+            viewHolder.LinearLayoutSetNumberID.setVisibility(View.GONE);
 
         final ShipViewHolder finalViewHolder = viewHolder;
         viewHolder.imageViewSetMaxID.setOnClickListener(new View.OnClickListener() {
@@ -126,5 +139,6 @@ public class SpaceShipAdapter extends ArrayAdapter<Ship> {
         public EditText editTextCountFleetID;
         public ImageView imageViewSetMaxID;
         public ImageView imageViewSetZeroID;
+        public LinearLayout LinearLayoutSetNumberID;
     }
 }

@@ -136,13 +136,16 @@ public class MessageActivity extends AppCompatActivity {
             public void onResponse(Call<GetReportResponse> call, Response<GetReportResponse> response) {
                 if (response.code() > 199 && response.code() < 301) {
                     ReportListReceive = (List<Report>) response.body().getReports();
-                    ReportAdapter adapter = new ReportAdapter(MessageActivity.this, ReportListReceive, user, fromMessageNumber);
+                    MessageAdapter adapter = new MessageAdapter(MessageActivity.this, ReportListReceive, user, fromMessageNumber);
 
                     // CLICK on show more
                     adapter.setOnEventListener(new OnListViewChildrenClick() {
                         @Override
                         public void OnClick(final int id, View v) {
-                            Constant.ToastErrorConnection(getApplicationContext());
+
+                            Intent intent = new Intent(MessageActivity.this, ReportActivity.class);
+                            intent.putExtra(Constant.EXTRA_REPORT_TO_DISPLAY, id);
+                            startActivity(intent);
                         }
                     });
 
